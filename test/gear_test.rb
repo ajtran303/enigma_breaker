@@ -36,7 +36,7 @@ class GearTest < MiniTest::Test
     @gear.stubs(:get_date_of_today).returns(expected_date)
 
     expected_offset = { A:1, B:0, C:2, D:5 }
-    assert_equal expected_offset, @gear.make_offset
+    assert_equal expected_offset, @gear.make_offsets
   end
 
   def test_it_can_square_the_date
