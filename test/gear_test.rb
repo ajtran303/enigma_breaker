@@ -11,6 +11,12 @@ class GearTest < MiniTest::Test
     assert_instance_of Gear, @gear
     assert_equal "02715", @gear.keys
     assert_equal "040895", @gear.date
+
+    gear_1 = Gear.new("02715")
+    assert_instance_of Gear, gear_1
+    assert_equal "02715", gear_1.keys
+    assert_instance_of String, gear_1.date
+    assert_equal 6, gear_1.date.size
   end
 
   def test_it_can_make_keys
@@ -51,8 +57,18 @@ class GearTest < MiniTest::Test
     assert_equal expected_shifts, Gear.shifts("02715", "040895")
   end
 
+  def test_its_class_can_get_shifts_with_one_argument
+    random_shifts = Gear.shifts("040895")
+
+    assert_instance_of Hash, random_shifts
+    assert_equal 4, random_shifts.size
+    assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
+    assert_equal true, random_shifts.values.all? { |value| (1...100).include?(value) }
+  end
+
   def test_its_class_can_get_shifts_without_arguments
     random_shifts = Gear.shifts
+
     assert_instance_of Hash, random_shifts
     assert_equal 4, random_shifts.size
     assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
