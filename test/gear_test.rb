@@ -26,25 +26,30 @@ class GearTest < MiniTest::Test
     assert_equal expected_keys, @gear.make_keys("99999")
   end
 
-  def test_it_can_get_the_date
+  def test_it_can_get_date_of_today
     expected_date = Date.today.strftime('%d%m%y') #ddmmyy
     assert_equal expected_date, @gear.get_date_of_today
   end
 
-  def test_it_can_make_an_offset
+  def test_it_can_make_offsets
     expected_date = "040895"
     @gear.stubs(:get_date_of_today).returns(expected_date)
 
-    expected_offset = { A:1, B:0, C:2, D:5 }
-    assert_equal expected_offset, @gear.make_offsets
+    expected_offsets = { A:1, B:0, C:2, D:5 }
+    assert_equal expected_offsets, @gear.make_offsets
   end
 
-  def test_it_can_square_the_date
+  def test_it_can_square_date
     expected_date = "040895"
     @gear.stubs(:get_date_of_today).returns(expected_date)
 
     expected_square = 1672401025
     assert_equal expected_square, @gear.square_date
+  end
+
+  def test_it_can_make_shifts
+    expected_shifts = { A:3, B:27, C:73, D:20 }
+    assert_equal expected_shifts, @gear.make_shifts
   end
 
 end
