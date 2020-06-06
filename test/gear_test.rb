@@ -7,6 +7,11 @@ class GearTest < MiniTest::Test
     @gear = Gear.new("02715", "040895")
   end
 
+  def test_its_class_can_get_shifts
+    expected_shifts = { A:3, B:27, C:73, D:20 }
+    assert_equal expected_shifts, Gear.shifts("02715", "040895")
+  end
+
   def test_it_exists_with_attributes
     assert_instance_of Gear, @gear
     assert_equal "02715", @gear.keys
