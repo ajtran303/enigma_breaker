@@ -44,7 +44,7 @@ class GearTest < MiniTest::Test
     random_keys = @gear.make_random_keys
     assert_instance_of String, random_keys
     assert_equal 5, random_keys.length
-    assert_includes 1...100_000, random_keys.to_i
+    assert_includes 0...100_000, random_keys.to_i
   end
 
   def test_it_can_get_date_of_today
@@ -63,7 +63,7 @@ class GearTest < MiniTest::Test
     assert_instance_of Hash, random_shifts
     assert_equal 4, random_shifts.size
     assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
-    assert_equal true, random_shifts.values.all? { |value| (1...100).include?(value) }
+    assert_equal true, random_shifts.values.all? { |value| (0...100).include?(value) }
   end
 
   def test_its_class_can_get_shifts_without_arguments
@@ -72,7 +72,7 @@ class GearTest < MiniTest::Test
     assert_instance_of Hash, random_shifts
     assert_equal 4, random_shifts.size
     assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
-    assert_equal true, random_shifts.values.all? { |value| (1...100).include?(value) }
+    assert_equal true, random_shifts.values.all? { |value| (0...100).include?(value) }
   end
 
   def test_it_can_exist_and_work_without_arguments
@@ -81,7 +81,7 @@ class GearTest < MiniTest::Test
     random_keys = gear.keys
     assert_instance_of String, random_keys
     assert_equal 5, random_keys.length
-    assert_includes 1...100_000, random_keys.to_i
+    assert_includes 0...100_000, random_keys.to_i
 
     key_a = random_keys[0..1].to_i
     key_b = random_keys[1..2].to_i
