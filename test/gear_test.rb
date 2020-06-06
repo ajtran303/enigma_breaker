@@ -53,10 +53,10 @@ class GearTest < MiniTest::Test
 
   def test_its_class_can_get_shifts_without_arguments
     random_shifts = Gear.shifts
-    assert_instance_of Array, random_shifts
+    assert_instance_of Hash, random_shifts
     assert_equal 4, random_shifts.size
     assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
-    assert_equal true, random_shifts.values.all? { |value| 1...100.include?(value) }
+    assert_equal true, random_shifts.values.all? { |value| (1...100).include?(value) }
   end
 
   def test_it_can_exist_and_work_without_arguments
