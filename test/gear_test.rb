@@ -5,12 +5,13 @@ require "./lib/gear"
 class GearTest < MiniTest::Test
 
 	def setup
-		@gear = Gear.new("02715")
+		@gear = Gear.new("02715", "040895")
 	end
 
 	def test_it_exists_with_attributes
 		assert_instance_of Gear, @gear
     assert_equal "02715", @gear.teeth
+    assert_equal "040895", @gear.date
 	end
 
   def test_it_can_make_keys
@@ -66,9 +67,16 @@ class GearTest < MiniTest::Test
 
     assert_equal 6, random_teeth.length
     assert_includes 1...100_000, random_teeth.to_i
+    #
+    # expected_keys = { A: random_teeth[0..1], B: random_teeth[1..2], C: random_teeth[2..3], D: random_teeth[3..4] }
+    # assert_equal expected_keys, @gear.make_keys
+  end
 
-    expected_keys = { A: random_teeth[0..1], B: random_teeth[1..2], C: random_teeth[2..3], D: random_teeth[3..4] }
-    assert_equal expected_keys, @gear.make_keys
+  def test_it_can_make_keys_from_random_teeth
+    gear = Gear.new
+    assert_instance_of String, gear.teeth
+    assert_equal 6, gear.teeth.length
+    assert_includes 1...100_000, gear.teeth.to_i
   end
 
 end
