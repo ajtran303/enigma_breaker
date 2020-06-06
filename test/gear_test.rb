@@ -10,7 +10,7 @@ class GearTest < MiniTest::Test
 
 	def test_it_exists_with_attributes
 		assert_instance_of Gear, @gear
-    assert_equal "02715", gear.teeth
+    assert_equal "02715", @gear.teeth
 	end
 
   def test_it_can_make_keys
@@ -52,7 +52,9 @@ class GearTest < MiniTest::Test
   end
 
   def test_it_can_make_shifts
-    skip
+    expected_date = "040895"
+    @gear.stubs(:get_date_of_today).returns(expected_date)
+    
     expected_shifts = { A:3, B:27, C:73, D:20 }
     assert_equal expected_shifts, @gear.make_shifts
   end
