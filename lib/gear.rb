@@ -12,7 +12,9 @@ class Gear
     new_gear = self.new(cogs[0], cogs[1]) unless cogs.size == 1
     new_gear = self.new(cogs[0]) if cogs.size == 1
     new_gear = self.new if cogs.empty?
-    new_gear.make_shifts
+    { shifts: new_gear.make_shifts,
+      key: new_gear.keys,
+      date: new_gear.date }
   end
 
   def make_keys
