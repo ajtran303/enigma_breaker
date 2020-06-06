@@ -8,6 +8,13 @@ class Gear
     @date = date
   end
 
+  def self.shifts(*cogs)
+    new_gear = self.new(cogs[0], cogs[1]) unless cogs.size == 1
+    new_gear = self.new(cogs[0]) if cogs.size == 1
+    new_gear = self.new if cogs.empty?
+    new_gear.make_shifts
+  end
+
   def make_keys
     { A: @keys[0..1].to_i,
       B: @keys[1..2].to_i,
@@ -39,7 +46,7 @@ class Gear
   end
 
   def make_random_keys
-    rand(1...100_000).to_s.rjust(5, "0")
+    rand(0...100_000).to_s.rjust(5, "0")
   end
 
 end
