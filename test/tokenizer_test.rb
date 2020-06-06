@@ -40,6 +40,9 @@ class TokenizerTest < MiniTest::Test
 
     expected = ["!", "?", "&", "&", "&"]
     assert_equal expected, @tokenizer.generate_tokens("!?&&&")
+
+    expected = ["1", "9", "9", "9", "-", "2", "0", "0", "0"]
+    assert_equal expected, @tokenizer.generate_tokens("1999-2000")
   end
 
 end
