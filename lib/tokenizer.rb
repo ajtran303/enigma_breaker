@@ -6,4 +6,15 @@ class Tokenizer
     @character_sequence = ("a".."z").to_a << " "
   end
 
+  def generate_tokens(message)
+    characters = message.downcase.split("")
+    characters.map do |character|
+      if character_sequence.include?(character)
+        character_sequence.index(character)
+      else
+        character
+      end
+    end
+  end
+
 end
