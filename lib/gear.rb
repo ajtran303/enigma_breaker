@@ -1,12 +1,17 @@
 require "date"
 
 class Gear
+  attr_reader :teeth
 
-  def make_keys(seed)
-    { A: seed[0..1].to_i,
-      B: seed[1..2].to_i,
-      C: seed[2..3].to_i,
-      D: seed[3..4].to_i }
+  def initialize(teeth)
+    @teeth = teeth
+  end
+
+  def make_keys
+    { A: @teeth[0..1].to_i,
+      B: @teeth[1..2].to_i,
+      C: @teeth[2..3].to_i,
+      D: @teeth[3..4].to_i }
   end
 
   def get_date_of_today
@@ -24,6 +29,13 @@ class Gear
 
   def square_date
     get_date_of_today.to_i**2
+  end
+
+  def make_shifts
+    make_keys.reduce({}) do |shifts, (key, value)|
+      shifts[key] = value + make_offsets[key]
+      shifts
+    end
   end
 
 end
