@@ -7,11 +7,6 @@ class GearTest < MiniTest::Test
     @gear = Gear.new("02715", "040895")
   end
 
-  def test_its_class_can_get_shifts
-    expected_shifts = { A:3, B:27, C:73, D:20 }
-    assert_equal expected_shifts, Gear.shifts("02715", "040895")
-  end
-
   def test_it_exists_with_attributes
     assert_instance_of Gear, @gear
     assert_equal "02715", @gear.keys
@@ -49,6 +44,19 @@ class GearTest < MiniTest::Test
   def test_it_can_get_date_of_today
     expected_date = Date.today.strftime('%d%m%y') #ddmmyy
     assert_equal expected_date, @gear.get_date_of_today
+  end
+
+  def test_its_class_can_get_shifts
+    expected_shifts = { A:3, B:27, C:73, D:20 }
+    assert_equal expected_shifts, Gear.shifts("02715", "040895")
+  end
+
+  def test_its_class_can_get_shifts_without_arguments
+    random_shifts = Gear.shifts
+    assert_instance_of Array, random_shifts
+    assert_equal 4, random_shifts.size
+    assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
+    assert_equal true, random_shifts.values.all? { |value| 1...100.include?(value) }
   end
 
   def test_it_can_exist_and_work_without_arguments
