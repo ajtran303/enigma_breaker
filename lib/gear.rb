@@ -1,22 +1,22 @@
 require "date"
 
 class Gear
-  attr_reader :teeth
+  attr_reader :keys, :date
 
-  def initialize(teeth)
-    @teeth = teeth
+  def initialize(keys=make_random_keys, date=get_date_of_today)
+    @keys = keys
+    @date = date
   end
 
   def make_keys
-    { A: @teeth[0..1].to_i,
-      B: @teeth[1..2].to_i,
-      C: @teeth[2..3].to_i,
-      D: @teeth[3..4].to_i }
+    { A: @keys[0..1].to_i,
+      B: @keys[1..2].to_i,
+      C: @keys[2..3].to_i,
+      D: @keys[3..4].to_i }
   end
 
   def get_date_of_today
-    date = Date.today
-    date.strftime('%d%m%y')
+    Date.today.strftime('%d%m%y')
   end
 
   def make_offsets
@@ -28,7 +28,7 @@ class Gear
   end
 
   def square_date
-    get_date_of_today.to_i**2
+    @date.to_i**2
   end
 
   def make_shifts
@@ -36,6 +36,10 @@ class Gear
       shifts[key] = value + make_offsets[key]
       shifts
     end
+  end
+
+  def make_random_keys
+    rand(1...100_000).to_s.rjust(5, "0")
   end
 
 end
