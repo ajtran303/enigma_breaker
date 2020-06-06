@@ -13,4 +13,33 @@ class TokenizerTest < MiniTest::Test
     assert_equal expected, @tokenizer.character_sequence
 	end
 
+  def test_it_can_generate_tokens
+    expected = [0]
+    assert_equal expected, @tokenizer.generate_tokens("a")
+
+    expected = [0, 0, 0, 0]
+    assert_equal expected, @tokenizer.generate_tokens("aAaA")
+
+    expected = [0, 0, 0, 0]
+    assert_equal expected, @tokenizer.generate_tokens("AaaA")
+
+    expected = [0, 0, 0, 0]
+    assert_equal expected, @tokenizer.generate_tokens("AAAA")
+
+    expected = [26, 26, 26, 26]
+    assert_equal expected, @tokenizer.generate_tokens("    ")
+
+    expected = [7, 4, 11, 11, 14]
+    assert_equal expected, @tokenizer.generate_tokens("hello")
+
+    expected = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
+    assert_equal expected, @tokenizer.generate_tokens("hello world")
+
+    expected = [7, 4, 11, 11, 14, ",", 26, 22, 14, 17, 11, 3, "!", "!", "!"]
+    assert_equal expected, @tokenizer.generate_tokens("hello, world!!!")
+
+    expected = ["!", "?", "&", "&", "&"]
+    assert_equal expected, @tokenizer.generate_tokens("!?&&&")
+  end
+
 end
