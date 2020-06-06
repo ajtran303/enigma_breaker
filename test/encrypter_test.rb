@@ -8,4 +8,13 @@ class EncrypterTest < MiniTest::Test
     assert_instance_of Encrypter, encrypter
   end
 
+  def test_it_can_group_tokens
+    encrypter = Encrypter.new
+
+    tokens = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3, 26, "1", 12, 8, 11, 11, 8, 14, 13, 26, 20, 18, 4, 17, 18, 26, "@", 26, 19, 7, 4, 26, 1, 4, 6, "/", "2", "0", "0", "4", ".", 26, 22, 14, 22, "!"]
+    expected = [[12, 24, 18, 15], [0, 2, 4, 26], [7, 0, 3, 26], ["1", 12, 8, 11], [11, 8, 14, 13], [26, 20, 18, 4], [17, 18, 26, "@"], [26, 19, 7, 4], [26, 1, 4, 6], ["/", "2", "0", "0"], ["4", ".", 26, 22], [14, 22, "!"]]
+
+    assert_equal expected, encrypter.group_tokens(tokens)
+  end
+
 end
