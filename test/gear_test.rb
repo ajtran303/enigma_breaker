@@ -54,9 +54,21 @@ class GearTest < MiniTest::Test
   def test_it_can_make_shifts
     expected_date = "040895"
     @gear.stubs(:get_date_of_today).returns(expected_date)
-    
+
     expected_shifts = { A:3, B:27, C:73, D:20 }
     assert_equal expected_shifts, @gear.make_shifts
+  end
+
+  def test_it_can_make_random_teeth
+    random_teeth = @gear.make_random_teeth
+
+    assert_instance_of String, random_teeth
+
+    assert_equal 6, random_teeth.length
+    assert_includes 1...100_000, random_teeth.to_i
+
+    expected_keys = { A: random_teeth[0..1], B: random_teeth[1..2], C: random_teeth[2..3], D: random_teeth[3..4] }
+    assert_equal expected_keys, @gear.make_keys
   end
 
 end
