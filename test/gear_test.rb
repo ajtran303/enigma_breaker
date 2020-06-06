@@ -89,6 +89,7 @@ class GearTest < MiniTest::Test
     shift_d = key_d + off_d
 
     expected_shifts = { A: shift_a, B: shift_b, C: shift_c, D: shift_d}
+    assert_equal expected_shifts, gear.make_shifts
   end
 
 end
