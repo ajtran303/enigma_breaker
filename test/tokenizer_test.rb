@@ -43,6 +43,9 @@ class TokenizerTest < MiniTest::Test
 
     expected = ["1", "9", "9", "9", "-", "2", "0", "0", "0"]
     assert_equal expected, @tokenizer.generate_tokens("1999-2000")
+
+    expected = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3, 26, "1", 12, 8, 11, 11, 8, 14, 13, 26, 20, 18, 4, 17, 18, 26, "@", 26, 19, 7, 4, 26, 1, 4, 6, "/", "2", "0", "0", "4", ".", 26, 22, 14, 22, "!"]
+    assert_equal expected, @tokenizer.generate_tokens("MySpace had 1Million users @ the beg/2004. Wow!")
   end
 
 end
