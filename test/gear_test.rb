@@ -56,26 +56,24 @@ class GearTest < MiniTest::Test
     expected_shifts = { A:3, B:27, C:73, D:20 }
     expected_output = {shifts: expected_shifts, key: "02715", date: "040895"}
     assert_equal expected_output, Gear.shifts("02715", "040895")
-  end
 
-  def test_its_class_can_get_shifts_with_one_argument
-    skip
-    random_shifts = Gear.shifts("040895")
+    shifts_output_1 = Gear.shifts("02715")
+    assert_instance_of Hash, shifts_output_1
+    assert_instance_of Hash, shifts_output_1[:shifts]
+    assert_equal true, shifts_output_1[:shifts].values.all? { |value| value.is_a? Integer }
+    assert_instance_of String, shifts_output_1[:key]
+    assert_equal 5, shifts_output_1[:key].size
+    assert_instance_of String, shifts_output_1[:date]
+    assert_equal 6, shifts_output_1[:date].size
 
-    assert_instance_of Hash, random_shifts
-    assert_equal 4, random_shifts.size
-    assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
-    assert_equal true, random_shifts.values.all? { |value| (0...100).include?(value) }
-  end
-
-  def test_its_class_can_get_shifts_without_arguments
-    skip
-    random_shifts = Gear.shifts
-
-    assert_instance_of Hash, random_shifts
-    assert_equal 4, random_shifts.size
-    assert_equal true, random_shifts.values.all? { |value| value.is_a? Integer }
-    assert_equal true, random_shifts.values.all? { |value| (0...100).include?(value) }
+    shifts_output_2 = Gear.shifts
+    assert_instance_of Hash, shifts_output_2
+    assert_instance_of Hash, shifts_output_2[:shifts]
+    assert_equal true, shifts_output_2[:shifts].values.all? { |value| value.is_a? Integer }
+    assert_instance_of String, shifts_output_2[:key]
+    assert_equal 5, shifts_output_2[:key].size
+    assert_instance_of String, shifts_output_2[:date]
+    assert_equal 6, shifts_output_2[:date].size
   end
 
   def test_it_can_exist_and_work_without_arguments
