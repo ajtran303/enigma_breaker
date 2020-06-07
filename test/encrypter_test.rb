@@ -23,7 +23,7 @@ class EncrypterTest < MiniTest::Test
     encrypter.add_cipher(0)
     encrypter.add_cipher(0)
     encrypter.add_cipher(0)
-    
+
     assert_equal 4, encrypter.ciphers.count
 
     expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
@@ -41,13 +41,25 @@ class EncrypterTest < MiniTest::Test
     assert_equal expected, encrypter.group_tokens(tokens)
   end
 
-  def test_it_can_get_a_cipher_from_tokens
-    skip
-    encrypter = Encrypter.new
+  def test_it_will_encrypt_nothing_if_all_ciphers_added_are_zero_or_twenty_seven
     tokens = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3, 26, "1", 12, 8, 11, 11, 8, 14, 13, 26, 20, 18, 4, 17, 18, 26, "@", 26, 19, 7, 4, 26, 1, 4, 6, "/", "2", "0", "0", "4", ".", 26, 22, 14, 22, "!"]
+    expected = "MySpace had 1Million users @ the beg/2004. Wow!"
 
-    grouped_tokens = encrypter.group_tokens(tokens)
-    assert_equal "MySpace had 1Million users @ the beg/2004. Wow!", encrypter.cipher(grouped_tokens)
+    encrypter_1 = Encrypter.new
+    4.times { encrypter_1.add_cipher(0) }
+    grouped_tokens = encrypter_1.group_tokens(tokens)
+    assert_equal expected, encrypter_1.encrypt(grouped_tokens)
+
+    encrypter_2 = Encrypter.new
+    4.times { encrypter_2.add_cipher(27) }
+    grouped_tokens = encrypter_2.group_tokens(tokens)
+    assert_equal expected, encrypter_2.encrypt(grouped_tokens)
+
+    encrypter_3 = Encrypter.new
+    2.times { encrypter_3.add_cipher(0) }
+    2.times { encrypter_3.add_cipher(27) }
+    grouped_tokens = encrypter_3.group_tokens(tokens)
+    assert_equal expected, encrypter_3.encrypt(grouped_tokens)
   end
 
 
