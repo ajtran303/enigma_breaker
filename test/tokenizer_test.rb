@@ -9,8 +9,8 @@ class TokenizerTest < MiniTest::Test
 
 	def test_it_exists_with_attributes
 		assert_instance_of Tokenizer, @tokenizer
-    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-    assert_equal expected, @tokenizer.character_sequence
+		expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+		assert_equal expected, @tokenizer.character_sequence
 	end
 
   def test_its_class_can_get_tokens
