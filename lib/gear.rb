@@ -8,8 +8,8 @@ class Gear
     @date = date
   end
 
-  def self.shifts(*cogs)
-    new_gear = self.new(cogs[0], cogs[1]) unless cogs.size == 1
+  def self.get_shifts(*cogs)
+    new_gear = self.new(cogs[0], cogs[1]) if cogs.size == 2
     new_gear = self.new(cogs[0]) if cogs.size == 1
     new_gear = self.new if cogs.empty?
     { shifts: new_gear.make_shifts,
