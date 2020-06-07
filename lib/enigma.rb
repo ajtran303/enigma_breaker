@@ -1,10 +1,13 @@
 class Enigma
 
-  def no_crypt(secret_message, key, date)
-    { encryption: secret_message,
-      key: key,
-      date: date
-    }
+  def encrypt(*secret_message)
+  end
+
+  def valid?(inputs)
+    message, key, date = inputs
+    inputs.all? { |input| input.is_a? String } &&
+    key.size == 5 &&
+    date.size == 6
   end
 
 end

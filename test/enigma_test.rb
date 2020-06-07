@@ -19,7 +19,7 @@ class EnigmaTest < MiniTest::Test
 	def test_it_can_validate_input
 		enigma = Enigma.new
 		secret_message = ["hello world", "02715", "040895"]
-		assert_equal true, enigma.validate(secret_message)
+		assert_equal true, enigma.valid?(secret_message)
 	end
 
 end
