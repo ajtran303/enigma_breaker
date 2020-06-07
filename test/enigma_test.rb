@@ -141,4 +141,20 @@ class EnigmaTest < MiniTest::Test
 		assert_equal false, enigma.is_valid_input?(valid_message_6, valid_key_6, invalid_date_6)
 	end
 
+	def test_it_can_encrypt_a_message_with_no_additional_input
+		enigma_1 = Enigma.new
+		enigma_1.stubs(:get_date_of_today).returns("040895")
+		enigma_1.stubs(:get_random_key).returns("02715")
+
+		expected = {:encryption=>"keder ohulw", :key=>"02715", :date=>"040895"}
+		assert_equal expected, enigma_1.encrypt("hello world")
+
+		enigma_2 = Enigma.new
+		enigma_2.stubs(:get_date_of_today).returns("070620")
+		enigma_2.stubs(:get_random_key).returns("02715")
+
+		expected = {:encryption=>"nib udmcxpu", :key=>"02715", :date=>"070620"}
+		assert_equal expected, enigma_2.encrypt("hello world")
+	end
+
 end
