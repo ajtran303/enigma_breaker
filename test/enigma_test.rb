@@ -51,9 +51,9 @@ class EnigmaTest < MiniTest::Test
 		invalid_message_1 = 94080095
 		invalid_message_2 = nil
 
-		assert_equal true, enigma.valid_message?(valid_message)
-		assert_equal false, enigma.valid_message?(invalid_message_1)
-		assert_equal false, enigma.valid_message?(invalid_message_2)
+		assert_equal true, enigma.is_valid_message?(valid_message)
+		assert_equal false, enigma.is_valid_message?(invalid_message_1)
+		assert_equal false, enigma.is_valid_message?(invalid_message_2)
 	end
 
 	def test_it_knows_valid_key
@@ -63,25 +63,34 @@ class EnigmaTest < MiniTest::Test
 		invalid_key_1 = "040895"
 		invalid_key_2 = "chars"
 		invalid_key_3 = 27150
-		assert_equal true, enigma.valid_key?(valid_key_1)
-		assert_equal true, enigma.valid_key?(valid_key_2)
-		assert_equal false, enigma.valid_key?(invalid_key_1)
-		assert_equal false, enigma.valid_key?(invalid_key_2)
-		assert_equal false, enigma.valid_key?(invalid_key_3)
+		assert_equal true, enigma.is_valid_key?(valid_key_1)
+		assert_equal true, enigma.is_valid_key?(valid_key_2)
+		assert_equal false, enigma.is_valid_key?(invalid_key_1)
+		assert_equal false, enigma.is_valid_key?(invalid_key_2)
+		assert_equal false, enigma.is_valid_key?(invalid_key_3)
 	end
 
 	def test_it_knows_valid_date
 		enigma = Enigma.new
 		valid_date_1 = "040895"
-		valid_key_2 = nil
+		valid_date_2 = nil
 		invalid_date_1 = "0408950"
 		invalid_date_2 = "hello!"
 		invalid_date_3 = 11947
-		assert_equal true, enigma.valid_date?(valid_date_1)
-		assert_equal true, enigma.valid_date?(valid_date_2)
-		assert_equal false, enigma.valid_date?(invalid_date_1)
-		assert_equal false, enigma.valid_date?(invalid_date_2)
-		assert_equal false, enigma.valid_date?(invalid_date_3)
+		assert_equal true, enigma.is_valid_date?(valid_date_1)
+		assert_equal true, enigma.is_valid_date?(valid_date_2)
+		assert_equal false, enigma.is_valid_date?(invalid_date_1)
+		assert_equal false, enigma.is_valid_date?(invalid_date_2)
+		assert_equal false, enigma.is_valid_date?(invalid_date_3)
+	end
+
+	def test_it_knows_what_contains_only_numbers
+		enigma = Enigma.new
+		valid_input = "02715"
+		invalid_input = "chars"
+
+		assert_equal true, enigma.is_only_numbers?(valid_input)
+		assert_equal false, enigma.is_only_numbers?(invalid_input)
 	end
 
 end
