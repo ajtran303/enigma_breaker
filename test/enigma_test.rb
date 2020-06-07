@@ -93,4 +93,40 @@ class EnigmaTest < MiniTest::Test
 		assert_equal false, enigma.is_only_numbers?(invalid_input)
 	end
 
+	def test_it_knows_what_is_valid_input
+		enigma = Enigma.new
+		valid_message_1 = "hello world"
+		valid_key_1 = "02715"
+		valid_date_1 = "040895"
+		assert_equal true, enigma.is_valid_input?(valid_message_1, valid_key_1, valid_date_1)
+
+		valid_message_2 = "hello world"
+		valid_key_2 = nil
+		valid_date_2 = "040895"
+		assert_equal true, enigma.is_valid_input?(valid_message_2, valid_key_2, valid_date_2)
+
+		valid_message_3 = "hello world"
+		valid_key_3 = nil
+		valid_date_3 = nil
+		assert_equal true, enigma.is_valid_input?(valid_message_3, valid_key_3, valid_date_3)
+
+		enigma = Enigma.new
+		invalid_message_4 = nil
+		valid_key_4 = "02715"
+		valid_date_4 = "040895"
+		assert_equal false, enigma.is_valid_input?(invalid_message_4, valid_key_4, valid_date_4)
+
+		enigma = Enigma.new
+		valid_message_5 = "hello world"
+		invalid_key_5 = "hello"
+		valid_date_5 = "040895"
+		assert_equal false, enigma.is_valid_input?(valid_message_5, invalid_key_5, valid_date_5)
+
+		enigma = Enigma.new
+		valid_message_6 = "hello world"
+		valid_key_6 = "02715"
+		invalid_date_6 = "hello!"
+		assert_equal false, enigma.is_valid_input?(valid_message_6, valid_key_6, invalid_date_6)
+	end
+
 end
