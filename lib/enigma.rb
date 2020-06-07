@@ -1,6 +1,7 @@
 require "./lib/gear"
 require "./lib/tokenizer"
 require "./lib/encrypter"
+require "./lib/decrypter"
 
 class Enigma
 
@@ -13,9 +14,18 @@ class Enigma
     { encryption: encryption, key: key, date: date }
   end
 
+  def decrypt(*secret_message)
+    validate(secret_message)
+    message_input, key_input, date_input = secret_message
+    shifts, key, date = Gear.get_shifts(key_input, date_input).values_at(:shifts, :key, :date)
+    tokens = Tokenizer.get_tokens(message_input)
+    decryption = Decrypter.get_decryption(tokens, shifts)
+    { decryption: decryption, key: key, date: date }
+  end
+
   def validate(secret_message)
     puts "That's not right!" unless valid?(secret_message)
-    # exit unless valid?(secret_message)
+    exit unless valid?(secret_message)
   end
 
   def valid?(inputs)
