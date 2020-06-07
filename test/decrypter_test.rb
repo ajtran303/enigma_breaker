@@ -11,11 +11,17 @@ class DecrypterTest < MiniTest::Test
   end
 
   def test_it_can_add_a_cipher
-    decrypter = Decrypter.new
-    decrypter.add_cipher(0)
+    decrypter_1 = Decrypter.new
+    decrypter_1.add_cipher(0)
 
     expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-    assert_includes decrypter.ciphers, expected_sequence
+    assert_includes decrypter_1.ciphers, expected_sequence
+
+    decrypter_2 = Decrypter.new
+    decrypter_2.add_cipher(1)
+
+    expected_sequence = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    assert_includes decrypter_2.ciphers, expected_sequence
   end
 
   def test_it_can_add_many_ciphers
@@ -66,6 +72,27 @@ class DecrypterTest < MiniTest::Test
 
     assert_equal expected, decrypter.group_tokens(tokens)
     assert_equal [14, 22, "!"], decrypter.terminal_tokens
+  end
+
+  def test_it_can_translate
+    skip
+    decrypter_1 = Decrypter.new
+    2.times { decrypter_1.add_cipher(0); decrypter_1.add_cipher(1) }
+    first_cipher, second_cipher, third_cipher, fourth_cipher = decrypter_1.ciphers
+
+    assert_equal "a", decrypter_1.translate(0, first_cipher)
+    assert_equal " ", decrypter_1.translate(0, second_cipher)
+    assert_equal "a", decrypter_1.translate(0, third_cipher)
+    assert_equal " ", decrypter_1.translate(0, fourth_cipher)
+
+    decrypter_2 = Decrypter.new
+    2.times { decrypter_2.add_cipher(0); decrypter_2.add_cipher(1) }
+    first_cipher, second_cipher, third_cipher, fourth_cipher = decrypter_2.ciphers
+
+    assert_equal ",", decrypter_2.translate(",", first_cipher)
+    assert_equal "\t", decrypter_2.translate("\t", second_cipher)
+    assert_equal "!", decrypter_2.translate("!", third_cipher)
+    assert_equal "@", decrypter_2.translate("@", fourth_cipher)
   end
 
 
