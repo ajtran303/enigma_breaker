@@ -12,10 +12,25 @@ class RotatorTest < MiniTest::Test
   end
 
   def test_it_can_shift_sequence_by_a_number
-    rotator = Rotator.new
-    rotator.shift_sequence_by(1)
+    rotator_1 = Rotator.new
+    rotator_1.shift_sequence_by(1)
     expected = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-    assert_equal expected, rotator.character_sequence
+    assert_equal expected, rotator_1.character_sequence
+
+    rotator_2 = Rotator.new
+    rotator_2.shift_sequence_by(0)
+    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    assert_equal expected, rotator_2.character_sequence
+
+    rotator_3 = Rotator.new
+    rotator_3.shift_sequence_by(27)
+    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    assert_equal expected, rotator_3.character_sequence
+
+    rotator_4 = Rotator.new
+    rotator_4.shift_sequence_by(28)
+    expected = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    assert_equal expected, rotator_4.character_sequence
   end
 
 end
