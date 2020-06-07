@@ -50,6 +50,7 @@ class EncrypterTest < MiniTest::Test
     encrypter_2.group_tokens(tokens)
     assert_equal [7, 0, 3], encrypter_2.terminal_tokens
 
+
     tokens = [7, 0, 3]
     assert_equal 3, tokens.size
 

@@ -49,12 +49,23 @@ class DecrypterTest < MiniTest::Test
     decrypter_2.group_tokens(tokens)
     assert_equal [7, 0, 3], decrypter_2.terminal_tokens
 
+
     tokens = [7, 0, 3]
     assert_equal 3, tokens.size
 
     decrypter_3 = Decrypter.new
     decrypter_3.group_tokens(tokens)
     assert_equal [7, 0, 3], decrypter_3.terminal_tokens
+  end
+
+  def test_it_can_group_tokens
+    decrypter = Decrypter.new
+
+    tokens = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3, 26, "1", 12, 8, 11, 11, 8, 14, 13, 26, 20, 18, 4, 17, 18, 26, "@", 26, 19, 7, 4, 26, 1, 4, 6, "/", "2", "0", "0", "4", ".", 26, 22, 14, 22, "!"]
+    expected = [[12, 24, 18, 15], [0, 2, 4, 26], [7, 0, 3, 26], ["1", 12, 8, 11], [11, 8, 14, 13], [26, 20, 18, 4], [17, 18, 26, "@"], [26, 19, 7, 4], [26, 1, 4, 6], ["/", "2", "0", "0"], ["4", ".", 26, 22]]
+
+    assert_equal expected, decrypter.group_tokens(tokens)
+    assert_equal [14, 22, "!"], decrypter.terminal_tokens
   end
 
 
