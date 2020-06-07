@@ -3,18 +3,14 @@ require "date"
 class Gear
   attr_reader :keys, :date
 
-  def initialize(keys=make_random_keys, date=get_date_of_today)
+  def initialize(keys=make_random_keys, date)
     @keys = keys
     @date = date
   end
 
-  def self.get_shifts(*cogs)
-    new_gear = self.new(cogs[0], cogs[1]) if cogs.size == 2
-    new_gear = self.new(cogs[0]) if cogs.size == 1
-    new_gear = self.new if cogs.empty?
-    { shifts: new_gear.make_shifts,
-      key: new_gear.keys,
-      date: new_gear.date }
+  def self.get_shifts(key, date)
+    new_gear = self.new(key, date)
+    new_gear.make_shifts
   end
 
   def make_keys
@@ -22,10 +18,6 @@ class Gear
       B: @keys[1..2].to_i,
       C: @keys[2..3].to_i,
       D: @keys[3..4].to_i }
-  end
-
-  def get_date_of_today
-    Date.today.strftime('%d%m%y')
   end
 
   def make_offsets
