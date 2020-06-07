@@ -3,15 +3,15 @@ require "./lib/tokenizer"
 
 class TokenizerTest < MiniTest::Test
 
-	def setup
-		@tokenizer = Tokenizer.new
-	end
+def setup
+@tokenizer = Tokenizer.new
+end
 
-	def test_it_exists_with_attributes
-		assert_instance_of Tokenizer, @tokenizer
-    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-    assert_equal expected, @tokenizer.character_sequence
-	end
+def test_it_exists_with_attributes
+assert_instance_of Tokenizer, @tokenizer
+expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+assert_equal expected, @tokenizer.character_sequence
+end
 
   def test_its_class_can_get_tokens
     message = "MySpace had 1Million users @ the beg/2004. Wow!"
