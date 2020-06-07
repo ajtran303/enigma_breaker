@@ -15,14 +15,15 @@ class Enigma
 
   def validate(secret_message)
     puts "That's not right!" unless valid?(secret_message)
-    exit unless valid?(secret_message)
+    # exit unless valid?(secret_message)
   end
 
   def valid?(inputs)
-    message, key, date = inputs
-    inputs.all? { |input| input.is_a? String } &&
-    (key+date).split("").all? { |input| ("0".."9").include? input } &&
-    key.size == 5 && date.size == 6
+    is_not_string = inputs.find { |input| input.class != String }
+    return false unless is_not_string.nil?
+    is_right_key = (inputs[1].each_char.all? { |character| ("0".."9").include? character }) && (inputs[1].size == 5)
+    is_right_date = (inputs[2].each_char.all? { |character| ("0".."9").include? character } || inputs[2].nil?) && (inputs[2].size == 6 || inputs[2].nil?)
+    is_not_string.nil? && is_right_key && is_right_date
   end
 
 end
