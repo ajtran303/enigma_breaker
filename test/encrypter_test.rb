@@ -49,6 +49,13 @@ class EncrypterTest < MiniTest::Test
     encrypter_2 = Encrypter.new
     encrypter_2.group_tokens(tokens)
     assert_equal [7, 0, 3], encrypter_2.terminal_tokens
+
+    tokens = [7, 0, 3]
+    assert_equal 3, tokens.size
+
+    encrypter_3 = Encrypter.new
+    encrypter_3.group_tokens(tokens)
+    assert_equal [7, 0, 3], encrypter_3.terminal_tokens
   end
 
   def test_it_can_add_a_cipher
