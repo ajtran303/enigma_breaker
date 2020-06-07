@@ -33,5 +33,29 @@ class DecrypterTest < MiniTest::Test
     assert_equal 4, decrypter.ciphers.count { |cipher| cipher == expected_sequence }
   end
 
+  def test_it_can_make_terminal_tokens
+    tokens = [12, 24, 18, 15, 0, 2, 4, 26]
+    assert_equal 8, tokens.size
+
+    decrypter_1 = Decrypter.new
+    decrypter_1.group_tokens(tokens)
+    assert_nil decrypter_1.terminal_tokens
+
+
+    tokens = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3]
+    assert_equal 11, tokens.size
+
+    decrypter_2 = Decrypter.new
+    decrypter_2.group_tokens(tokens)
+    assert_equal [7, 0, 3], decrypter_2.terminal_tokens
+
+    tokens = [7, 0, 3]
+    assert_equal 3, tokens.size
+
+    decrypter_3 = Decrypter.new
+    decrypter_3.group_tokens(tokens)
+    assert_equal [7, 0, 3], decrypter_3.terminal_tokens
+  end
+
 
 end
