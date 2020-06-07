@@ -1,5 +1,3 @@
-require "date"
-
 class Gear
   attr_reader :keys, :date
 

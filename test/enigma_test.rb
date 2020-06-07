@@ -1,6 +1,7 @@
 require "./test/test_helper"
 require "mocha/minitest"
 require "./lib/enigma"
+require "date"
 
 class EnigmaTest < MiniTest::Test
 
@@ -28,6 +29,17 @@ class EnigmaTest < MiniTest::Test
 		expected = { encryption: "keder ohulw", key: "02715", date: "040895" }
 		assert_equal expected, enigma.encrypt("hello world", "02715")
 	end
+
+
+	def test_it_can_decrypt_a_message_given_a_key # without date
+		enigma_1 = Enigma.new
+		enigma_1.stubs(:get_date_of_today).returns("040895")
+		encrypted = enigma_1.encrypt("hello world", "02715")
+
+		expected = { decryption: "hello world", key: "02715", date: "040895" }
+		assert_equal expected, enigma_1.decrypt(encrypted[:encryption], "02715")
+	end
+
 
 	def test_it_has_a_real_date
 		enigma = Enigma.new

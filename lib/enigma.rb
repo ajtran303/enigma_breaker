@@ -1,3 +1,4 @@
+require "date"
 require "./lib/gear"
 require "./lib/tokenizer"
 require "./lib/encrypter"
