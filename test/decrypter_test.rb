@@ -141,4 +141,10 @@ class DecrypterTest < MiniTest::Test
     assert_equal "hdlkozwnrkd!", decrypter_3.decrypt(secret_message)
   end
 
+  def test_its_class_can_return_a_cipher
+    tokens = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3, "!"]
+    shifts = { A:0, B:0, C:0, D:0 }
+    assert_equal "hello world!", Decrypter.get_decryption(tokens, shifts)
+  end
+
 end

@@ -9,6 +9,13 @@ class Decrypter
     @terminal_tokens = nil
   end
 
+  def self.get_decryption(tokens, shifts)
+    decrypter = Decrypter.new
+    shifts.values_at(:A, :B, :C, :D).each { |shift| decrypter.add_cipher(shift) }
+    message = decrypter.group_tokens(tokens)
+    decrypter.decrypt(message)
+  end
+
   def add_cipher(rotations)
     @ciphers << Rotator.get_sequence(-rotations)
   end
