@@ -10,6 +10,24 @@ class EncrypterTest < MiniTest::Test
     assert_nil encrypter.terminal_tokens
   end
 
+  def test_it_can_encrypt
+    tokens = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3, "!"]
+    encrypter_1 = Encrypter.new
+    4.times { encrypter_1.add_cipher(0) }
+    secret_message = encrypter_1.group_tokens(tokens)
+    assert_equal "hello world!", encrypter_1.encrypt(secret_message)
+
+    encrypter_2 = Encrypter.new
+    4.times { encrypter_2.add_cipher(1) }
+    secret_message = encrypter_2.group_tokens(tokens)
+    assert_equal "ifmmpaxpsme!", encrypter_2.encrypt(secret_message)
+
+    encrypter_3 = Encrypter.new
+    2.times { encrypter_3.add_cipher(0); encrypter_3.add_cipher(1) }
+    secret_message = encrypter_3.group_tokens(tokens)
+    assert_equal "hflmoawprmd!", encrypter_3.encrypt(secret_message)
+  end
+
   def test_it_can_make_terminal_tokens
     tokens = [12, 24, 18, 15, 0, 2, 4, 26]
     assert_equal 8, tokens.size
@@ -61,7 +79,6 @@ class EncrypterTest < MiniTest::Test
   end
 
   def test_it_will_encrypt_nothing_if_all_ciphers_added_are_zero_or_twenty_seven
-    skip
     tokens = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3, 26, "1", 12, 8, 11, 11, 8, 14, 13, 26, 20, 18, 4, 17, 18, 26, "@", 26, 19, 7, 4, 26, 1, 4, 6, "/", "2", "0", "0", "4", ".", 26, 22, 14, 22, "!"]
     expected = "myspace had 1million users @ the beg/2004. wow!"
 
