@@ -5,24 +5,26 @@ require "./lib/decrypter"
 
 class Enigma
 
-  def encrypt(*secret_message)
-    tokens, shifts, key, date = setup(secret_message).values
-    encryption = Encrypter.get_encryption(tokens, shifts)
-    { encryption: encryption, key: key, date: date }
+  def get_date_of_today
+    Date.today.strftime('%d%m%y')
   end
 
-  def decrypt(*secret_message)
-    tokens, shifts, key, date = setup(secret_message).values
-    decryption = Decrypter.get_decryption(tokens, shifts)
-    { decryption: decryption, key: key, date: date }
+  def encrypt(secret_message, *settings)
+    initial_key, offset_key = settings
+    offset_key ||= get_date_of_today
+    tokens = Tokenizer.get_tokens(secret_message)
+    shifts = Gear.get_shifts(initial_key, offset_key)
+    encrypted_message = Encrypter.get_encryption(tokens, shifts)
+    { encryption: encrypted_message, key: initial_key, date: offset_key }
   end
 
-  def setup(secret_message)
-    validate(secret_message)
-    message_input, key_input, date_input = secret_message
-    shifts, key, date = Gear.get_shifts(key_input, date_input).values
-    tokens = Tokenizer.get_tokens(message_input)
-    { tokens: tokens, shifts: shifts, key: key, date: date }
+  def decrypt(secret_message, *settings)
+    initial_key, offset_key = settings
+    offset_key ||= get_date_of_today
+    tokens = Tokenizer.get_tokens(secret_message)
+    shifts = Gear.get_shifts(initial_key, offset_key)
+    decrypted_message = Decrypter.get_decryption(tokens, shifts)
+    { decryption: decrypted_message, key: initial_key, date: offset_key }
   end
 
   def validate(secret_message)
