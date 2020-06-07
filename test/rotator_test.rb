@@ -34,7 +34,7 @@ class RotatorTest < MiniTest::Test
   end
 
   def test_its_class_can_return_a_shifted_sequence
-    expected = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    expected = ["b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " ", "a"]
     assert_equal expected, Rotator.get_sequence(1)
   end
 
