@@ -17,7 +17,7 @@ class Encrypter
 
   def group_tokens(tokens)
     grouped_tokens = []
-    tokens.each_slice(4) {|token_group| grouped_tokens << token_group}
+    tokens.each_slice(4) {|token| grouped_tokens << token}
     @terminal_tokens = grouped_tokens.pop if grouped_tokens.last.size < 4
     grouped_tokens
   end
