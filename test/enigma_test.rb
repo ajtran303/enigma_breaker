@@ -9,7 +9,6 @@ class EnigmaTest < MiniTest::Test
 	end
 
 	def test_it_can_encrypt_a_message
-		skip
 		enigma = Enigma.new
 		#with key and date
 		expected = { encryption: "keder ohulw", key: "02715", date: "040895" }
@@ -20,6 +19,21 @@ class EnigmaTest < MiniTest::Test
 		enigma = Enigma.new
 		secret_message = ["hello world", "02715", "040895"]
 		assert_equal true, enigma.valid?(secret_message)
+
+		bad_message_1 = ["hello world", "02715009", "040895"]
+		assert_equal false, enigma.valid?(bad_message_1)
+
+		bad_message_2 = ["hello world", "02715", "094080095"]
+		assert_equal false, enigma.valid?(bad_message_2)
+
+		bad_message_3 = ["hello world", "chars", "040895"]
+		assert_equal false, enigma.valid?(bad_message_3)
+
+		bad_message_4 = ["hello world", "02715", "hello!"]
+		assert_equal false, enigma.valid?(bad_message_4)
+
+		bad_message_5 = [43770, 2715, 40895]
+		assert_equal false, enigma.valid?(bad_message_5)
 	end
 
 end
