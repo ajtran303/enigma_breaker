@@ -9,35 +9,65 @@ class Enigma
     Date.today.strftime('%d%m%y')
   end
 
+  def is_valid_message?(message_input)
+    message_input.is_a? String
+  end
+
+  def is_valid_key?(key_input)
+    ( is_valid_message?(key_input) &&
+      is_only_numbers?(key_input) &&
+      key_input.size == 5
+    ) || key_input.nil?
+  end
+
+  def is_valid_date?(date_input)
+    ( is_valid_message?(date_input) &&
+      is_only_numbers?(date_input) &&
+      date_input.size == 6
+    ) || date_input.nil?
+  end
+
+  def is_only_numbers?(character_input)
+    character_input.each_char.all? do |character|
+      ("0".."9").include? character
+    end
+  end
+
+  def is_valid_input?(*inputs_to_validate)
+    message, key, date = inputs_to_validate
+    is_valid_message?(message) &&
+    is_valid_key?(key) &&
+    is_valid_date?(date)
+  end
+
+  def reprimand
+    puts "Invalid input! Execution halted."; exit
+  end
+
   def encrypt(secret_message, *settings)
     initial_key, offset_key = settings
+    reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
     offset_key ||= get_date_of_today
+
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key)
-    encrypted_message = Encrypter.get_encryption(tokens, shifts)
-    { encryption: encrypted_message, key: initial_key, date: offset_key }
+
+    { encryption: Encrypter.get_encryption(tokens, shifts),
+      key: initial_key,
+      date: offset_key }
   end
 
   def decrypt(secret_message, *settings)
     initial_key, offset_key = settings
+    reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
     offset_key ||= get_date_of_today
+
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key)
-    decrypted_message = Decrypter.get_decryption(tokens, shifts)
-    { decryption: decrypted_message, key: initial_key, date: offset_key }
-  end
 
-  def validate(secret_message)
-    puts "That's not right!" unless valid?(secret_message)
-    exit unless valid?(secret_message)
-  end
-
-  def valid?(inputs)
-    is_not_string = inputs.detect { |input| input.class != String }
-    return false unless is_not_string.nil?
-    is_right_key = (inputs[1].each_char.all? { |character| ("0".."9").include? character }) && (inputs[1].size == 5)
-    is_right_date = (inputs[2].each_char.all? { |character| ("0".."9").include? character } || inputs[2].nil?) && (inputs[2].size == 6 || inputs[2].nil?)
-    is_not_string.nil? && is_right_key && is_right_date
+    { decryption: Decrypter.get_decryption(tokens, shifts),
+      key: initial_key,
+      date: offset_key }
   end
 
 end
