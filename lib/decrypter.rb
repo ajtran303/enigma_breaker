@@ -13,6 +13,16 @@ class Decrypter
     @ciphers << Rotator.get_sequence(-rotations)
   end
 
+  def decrypt(sequence_of_tokens)
+    decryption_end = @terminal_tokens.zip(@ciphers).map do |(token, cipher)|
+      translate(token, cipher)
+    end unless @terminal_tokens == nil
+    decryption = sequence_of_tokens.flat_map do |tokens|
+      tokens.zip(@ciphers).map { |(token, cipher)| translate(token, cipher) }
+    end << decryption_end
+    decryption.join
+  end
+
   def group_tokens(tokens)
     grouped_tokens = []
     tokens.each_slice(4) {|token| grouped_tokens << token}
