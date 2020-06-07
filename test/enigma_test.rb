@@ -157,4 +157,13 @@ class EnigmaTest < MiniTest::Test
 		assert_equal expected, enigma_2.encrypt("hello world")
 	end
 
+	def test_it_can_make_random_keys
+		enigma = Enigma.new
+    random_keys = enigma.make_random_keys
+    assert_instance_of String, random_keys
+    assert_equal 5, random_keys.length
+    assert_includes 0...100_000, random_keys.to_i
+  end
+
+
 end
