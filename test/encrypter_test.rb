@@ -28,6 +28,12 @@ class EncrypterTest < MiniTest::Test
     assert_equal "hflmoawprmd!", encrypter_3.encrypt(secret_message)
   end
 
+  def test_its_class_can_return_a_cipher
+    tokens = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3, "!"]
+    shifts = { A:0, B:0, C:0, D:0 }
+    assert_equal "hello world!", Encrypter.get_encryption(tokens, shifts)
+  end
+
   def test_it_can_make_terminal_tokens
     tokens = [12, 24, 18, 15, 0, 2, 4, 26]
     assert_equal 8, tokens.size
