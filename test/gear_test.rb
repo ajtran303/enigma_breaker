@@ -55,9 +55,9 @@ class GearTest < MiniTest::Test
   def test_its_class_can_output_shifts_key_and_date
     expected_shifts = { A:3, B:27, C:73, D:20 }
     expected_output = {shifts: expected_shifts, key: "02715", date: "040895"}
-    assert_equal expected_output, Gear.shifts("02715", "040895")
+    assert_equal expected_output, Gear.get_shifts("02715", "040895")
 
-    shifts_output_1 = Gear.shifts("02715")
+    shifts_output_1 = Gear.get_shifts("02715")
     assert_instance_of Hash, shifts_output_1
     assert_instance_of Hash, shifts_output_1[:shifts]
     assert_equal true, shifts_output_1[:shifts].values.all? { |value| value.is_a? Integer }
@@ -66,7 +66,7 @@ class GearTest < MiniTest::Test
     assert_instance_of String, shifts_output_1[:date]
     assert_equal 6, shifts_output_1[:date].size
 
-    shifts_output_2 = Gear.shifts
+    shifts_output_2 = Gear.get_shifts
     assert_instance_of Hash, shifts_output_2
     assert_instance_of Hash, shifts_output_2[:shifts]
     assert_equal true, shifts_output_2[:shifts].values.all? { |value| value.is_a? Integer }
