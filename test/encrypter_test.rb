@@ -69,9 +69,9 @@ class EncrypterTest < MiniTest::Test
     first_cipher, second_cipher, third_cipher, fourth_cipher = encrypter_1.ciphers
 
     assert_equal "a", encrypter_1.translate(0, first_cipher)
-    assert_equal "b", encrypter_1.translate(1, second_cipher)
+    assert_equal "c", encrypter_1.translate(1, second_cipher)
     assert_equal "a", encrypter_1.translate(0, third_cipher)
-    assert_equal "b", encrypter_1.translate(1, fourth_cipher)
+    assert_equal "c", encrypter_1.translate(1, fourth_cipher)
 
     encrypter_2 = Encrypter.new
     2.times { encrypter_2.add_cipher(0); encrypter_2.add_cipher(1) }
