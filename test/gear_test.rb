@@ -11,12 +11,6 @@ class GearTest < MiniTest::Test
     assert_instance_of Gear, @gear
     assert_equal "02715", @gear.keys
     assert_equal "040895", @gear.date
-
-    gear_1 = Gear.new("02715")
-    assert_instance_of Gear, gear_1
-    assert_equal "02715", gear_1.keys
-    assert_instance_of String, gear_1.date
-    assert_equal 6, gear_1.date.size
   end
 
   def test_it_can_make_keys
@@ -47,74 +41,9 @@ class GearTest < MiniTest::Test
     assert_includes 0...100_000, random_keys.to_i
   end
 
-  def test_it_can_get_date_of_today
-    expected_date = Date.today.strftime('%d%m%y') #ddmmyy
-    assert_equal expected_date, @gear.get_date_of_today
-  end
-
   def test_its_class_can_output_shifts_key_and_date
     expected_shifts = { A:3, B:27, C:73, D:20 }
-    expected_output = {shifts: expected_shifts, key: "02715", date: "040895"}
-    assert_equal expected_output, Gear.get_shifts("02715", "040895")
-
-    shifts_output_1 = Gear.get_shifts("02715")
-    assert_instance_of Hash, shifts_output_1
-    assert_instance_of Hash, shifts_output_1[:shifts]
-    assert_equal true, shifts_output_1[:shifts].values.all? { |value| value.is_a? Integer }
-    assert_instance_of String, shifts_output_1[:key]
-    assert_equal 5, shifts_output_1[:key].size
-    assert_instance_of String, shifts_output_1[:date]
-    assert_equal 6, shifts_output_1[:date].size
-
-    shifts_output_2 = Gear.get_shifts
-    assert_instance_of Hash, shifts_output_2
-    assert_instance_of Hash, shifts_output_2[:shifts]
-    assert_equal true, shifts_output_2[:shifts].values.all? { |value| value.is_a? Integer }
-    assert_instance_of String, shifts_output_2[:key]
-    assert_equal 5, shifts_output_2[:key].size
-    assert_instance_of String, shifts_output_2[:date]
-    assert_equal 6, shifts_output_2[:date].size
-  end
-
-  def test_it_can_exist_and_work_without_arguments
-    gear = Gear.new
-
-    random_keys = gear.keys
-    assert_instance_of String, random_keys
-    assert_equal 5, random_keys.length
-    assert_includes 0...100_000, random_keys.to_i
-
-    key_a = random_keys[0..1].to_i
-    key_b = random_keys[1..2].to_i
-    key_c = random_keys[2..3].to_i
-    key_d = random_keys[3..4].to_i
-
-    expected_keys = { A: key_a, B: key_b, C: key_c, D: key_d }
-    assert_equal expected_keys, gear.make_keys
-
-    date_of_today = gear.date
-    assert_instance_of String, date_of_today
-    assert_equal 6, date_of_today.length
-    assert_includes 1..31, date_of_today[0..1].to_i
-    assert_includes 1..12, date_of_today[2..3].to_i
-    assert_includes 0..99, date_of_today[4..5].to_i
-
-    expected_offsets = gear.square_date.to_s[-4..-1].split("")
-    off_a = expected_offsets[0].to_i
-    off_b = expected_offsets[1].to_i
-    off_c = expected_offsets[2].to_i
-    off_d = expected_offsets[3].to_i
-
-    expected_offsets = { A: off_a, B: off_b, C: off_c, D: off_d }
-    assert_equal expected_offsets, gear.make_offsets
-
-    shift_a = key_a + off_a
-    shift_b = key_b + off_b
-    shift_c = key_c + off_c
-    shift_d = key_d + off_d
-
-    expected_shifts = { A: shift_a, B: shift_b, C: shift_c, D: shift_d}
-    assert_equal expected_shifts, gear.make_shifts
+    assert_equal expected_shifts, Gear.get_shifts("02715", "040895")
   end
 
 end
