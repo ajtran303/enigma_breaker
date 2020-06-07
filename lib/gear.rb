@@ -1,7 +1,7 @@
 class Gear
   attr_reader :keys, :date
 
-  def initialize(keys=make_random_keys, date)
+  def initialize(keys, date)
     @keys = keys
     @date = date
   end
@@ -35,10 +35,6 @@ class Gear
       shifts[key] = value + make_offsets[key]
       shifts
     end
-  end
-
-  def make_random_keys
-    rand(0...100_000).to_s.rjust(5, "0")
   end
 
 end
