@@ -42,7 +42,6 @@ class EncrypterTest < MiniTest::Test
   end
 
   def test_it_will_encrypt_nothing_if_all_ciphers_added_are_zero_or_twenty_seven
-    skip
     tokens = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3, 26, "1", 12, 8, 11, 11, 8, 14, 13, 26, 20, 18, 4, 17, 18, 26, "@", 26, 19, 7, 4, 26, 1, 4, 6, "/", "2", "0", "0", "4", ".", 26, 22, 14, 22, "!"]
     expected = "myspace had 1million users @ the beg/2004. wow!"
 
@@ -61,6 +60,14 @@ class EncrypterTest < MiniTest::Test
     2.times { encrypter_3.add_cipher(27) }
     grouped_tokens = encrypter_3.group_tokens(tokens)
     assert_equal expected, encrypter_3.encrypt(grouped_tokens)
+
+    tokens = [12, 24, 18, 15, 0, 2, 4, 26]
+    expected = "myspace "
+    encrypter_4 = Encrypter.new
+    2.times { encrypter_4.add_cipher(0) }
+    2.times { encrypter_4.add_cipher(27) }
+    grouped_tokens = encrypter_4.group_tokens(tokens)
+    assert_equal expected, encrypter_4.encrypt(grouped_tokens)
   end
 
   def test_it_can_translate
