@@ -57,6 +57,7 @@ class EnigmaTest < MiniTest::Test
 	end
 
 	def test_it_knows_valid_key
+		enigma = Enigma.new
 		valid_key_1 = "02715"
 		valid_key_2 = nil
 		invalid_key_1 = "040895"
@@ -70,6 +71,7 @@ class EnigmaTest < MiniTest::Test
 	end
 
 	def test_it_knows_valid_date
+		enigma = Enigma.new
 		valid_date_1 = "040895"
 		valid_key_2 = nil
 		invalid_date_1 = "0408950"
