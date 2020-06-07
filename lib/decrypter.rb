@@ -1,3 +1,5 @@
+require './lib/rotator'
+
 class Decrypter
 
   attr_reader :ciphers, :terminal_tokens
@@ -6,5 +8,9 @@ class Decrypter
     @ciphers = []
     @terminal_tokens = nil
   end
-  
+
+  def add_cipher(rotations)
+    @ciphers << Rotator.get_sequence(rotations)
+  end
+
 end
