@@ -6,4 +6,7 @@ class Encrypter
     grouped_tokens
   end
 
+  def cipher
+  end
+
 end
