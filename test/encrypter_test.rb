@@ -6,15 +6,32 @@ class EncrypterTest < MiniTest::Test
   def test_it_exists_with_attributes
     encrypter = Encrypter.new
     assert_instance_of Encrypter, encrypter
+    assert_equal [], encrypter.ciphers
+  end
 
+  def test_it_can_add_a_cipher
+    encrypter = Encrypter.new
+    encrypter.add_cipher(0)
+
+    expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+
+    assert_includes encrypter.cipher, expected_sequence
+  end
+
+  def test_it_can_add_many_ciphers
+    skip
+    encrypter = Encrypter.new
+    encrypter.add_cipher(0)
+    encrypter.add_cipher(0)
+    encrypter.add_cipher(0)
+    encrypter.add_cipher(0)
 
     assert_equal 4, encrypter.ciphers.count
     assert_equal true, encrypter.ciphers.all? { |cipher| cipher.count == 27 }
 
     expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
 
-    assert_equal true, encrypter.ciphers.all? { |cipher| cipher == expected_sequence }
-
+    assert_equal 4, encrypter.ciphers.count { |cipher| cipher == expected_sequence }
   end
 
   def test_it_can_group_tokens
