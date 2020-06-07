@@ -45,25 +45,41 @@ class EnigmaTest < MiniTest::Test
 		assert_equal expected, enigma.decrypt("keder ohulw", "02715", "040895")
 	end
 
-	def test_it_can_validate_input
+	def test_it_knows_valid_message
 		enigma = Enigma.new
-		secret_message = ["hello world", "02715", "040895"]
-		assert_equal true, enigma.valid?(secret_message)
+		valid_message = "hello world"
+		invalid_message_1 = 94080095
+		invalid_message_2 = nil
 
-		bad_message_1 = ["hello world", "02715009", "040895"]
-		assert_equal false, enigma.valid?(bad_message_1)
+		assert_equal true, enigma.valid_message?(valid_message)
+		assert_equal false, enigma.valid_message?(invalid_message_1)
+		assert_equal false, enigma.valid_message?(invalid_message_2)
+	end
 
-		bad_message_2 = ["hello world", "02715", "094080095"]
-		assert_equal false, enigma.valid?(bad_message_2)
+	def test_it_knows_valid_key
+		valid_key_1 = "02715"
+		valid_key_2 = nil
+		invalid_key_1 = "040895"
+		invalid_key_2 = "chars"
+		invalid_key_3 = 27150
+		assert_equal true, enigma.valid_key?(valid_key_1)
+		assert_equal true, enigma.valid_key?(valid_key_2)
+		assert_equal false, enigma.valid_key?(invalid_key_1)
+		assert_equal false, enigma.valid_key?(invalid_key_2)
+		assert_equal false, enigma.valid_key?(invalid_key_3)
+	end
 
-		bad_message_3 = ["hello world", "chars", "040895"]
-		assert_equal false, enigma.valid?(bad_message_3)
-
-		bad_message_4 = ["hello world", "02715", "hello!"]
-		assert_equal false, enigma.valid?(bad_message_4)
-
-		bad_message_5 = [43770, 2715, 40895]
-		assert_equal false, enigma.valid?(bad_message_5)
+	def test_it_knows_valid_date
+		valid_date_1 = "040895"
+		valid_key_2 = nil
+		invalid_date_1 = "0408950"
+		invalid_date_2 = "hello!"
+		invalid_date_3 = 11947
+		assert_equal true, enigma.valid_date?(valid_date_1)
+		assert_equal true, enigma.valid_date?(valid_date_2)
+		assert_equal false, enigma.valid_date?(invalid_date_1)
+		assert_equal false, enigma.valid_date?(invalid_date_2)
+		assert_equal false, enigma.valid_date?(invalid_date_3)
 	end
 
 end
