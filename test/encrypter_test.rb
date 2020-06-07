@@ -7,6 +7,24 @@ class EncrypterTest < MiniTest::Test
     encrypter = Encrypter.new
     assert_instance_of Encrypter, encrypter
     assert_equal [], encrypter.ciphers
+    assert_nil encrypter.terminal_tokens
+  end
+
+  def test_it_can_make_terminal_tokens
+    tokens = [12, 24, 18, 15, 0, 2, 4, 26]
+    assert_equal 8, tokens.size
+
+    encrypter_1 = Encrypter.new
+    encrypter_1.group_tokens(tokens)
+    assert_nil encrypter_1.terminal_tokens
+
+
+    tokens = [12, 24, 18, 15, 0, 2, 4, 26, 7, 0, 3]
+    assert_equal 11, tokens.size
+
+    encrypter_2 = Encrypter.new
+    encrypter_2.group_tokens(tokens)
+    assert_equal [7, 0, 3], encrypter_2.terminal_tokens
   end
 
   def test_it_can_add_a_cipher
