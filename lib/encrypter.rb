@@ -8,6 +8,13 @@ class Encrypter
     @terminal_tokens = nil
   end
 
+  def self.get_encryption(tokens, shifts)
+    encrypter = Encrypter.new
+    shifts.values_at(:A, :B, :C, :D).each { |shift| encrypter.add_cipher(shift) }
+    message = encrypter.group_tokens(tokens)
+    encrypter.encrypt(message)
+  end
+
   def group_tokens(tokens)
     grouped_tokens = []
     tokens.each_slice(4) {|token_group| grouped_tokens << token_group}
