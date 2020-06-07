@@ -7,9 +7,12 @@ class EnigmaTest < MiniTest::Test
 	def test_it_exists_with_attributes
 		enigma = Enigma.new
 		assert_instance_of Enigma, enigma
+	end
 
+	def test_it_can_get_date_of_today
+		enigma = Enigma.new
 		date_of_today = Date.today.strftime('%d%m%y')
-		assert_equal date_of_today = enigma.date
+		assert_equal date_of_today, enigma.get_date_of_today
 	end
 
 	def test_it_can_encrypt_a_message_given_a_key_and_date
@@ -18,17 +21,17 @@ class EnigmaTest < MiniTest::Test
 		assert_equal expected, enigma.encrypt("hello world", "02715", "040895")
 	end
 
-	def test_it_can_encrypt_a_message_given_a_key
+	def test_it_can_encrypt_a_message_given_a_key # without date
 		enigma = Enigma.new
-		enigma.stubs(:date).returns("040895")
+		enigma.stubs(:get_date_of_today).returns("040895")
 
-		expected = { encryption: "keder ohulw", key: "02715", date: "060720" }
+		expected = { encryption: "keder ohulw", key: "02715", date: "040895" }
 		assert_equal expected, enigma.encrypt("hello world", "02715")
 	end
 
 	def test_it_has_a_real_date
 		enigma = Enigma.new
-		date_of_today = enigma.date
+		date_of_today = enigma.get_date_of_today
 		assert_instance_of String, date_of_today
 		assert_equal 6, date_of_today.length
 		assert_includes 1..31, date_of_today[0..1].to_i
@@ -36,15 +39,13 @@ class EnigmaTest < MiniTest::Test
 		assert_includes 0..99, date_of_today[4..5].to_i
 	end
 
-	def test_it_can_decrypt_a_message #with key and date
-		skip
+	def test_it_can_decrypt_a_message # with key and date
 		enigma = Enigma.new
 		expected = { decryption: "hello world", key: "02715", date: "040895" }
 		assert_equal expected, enigma.decrypt("keder ohulw", "02715", "040895")
 	end
 
 	def test_it_can_validate_input
-		skip
 		enigma = Enigma.new
 		secret_message = ["hello world", "02715", "040895"]
 		assert_equal true, enigma.valid?(secret_message)
