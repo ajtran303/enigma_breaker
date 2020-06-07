@@ -12,4 +12,10 @@ class Rotator
     @character_sequence = sequence.rotate(-amount)
   end
 
+  def self.get_sequence(shift_amount)
+    rotator = Rotator.new
+    rotator.shift_sequence_by(shift_amount)
+    rotator.character_sequence
+  end
+
 end
