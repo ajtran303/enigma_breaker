@@ -163,7 +163,7 @@ class EnigmaTest < MiniTest::Test
     assert_instance_of String, random_keys
     assert_equal 5, random_keys.length
     assert_includes 0...100_000, random_keys.to_i
-		assert_equal true, random_keys.each_char.all? { |key| ("0".."9").include? key }
-  end
+		assert_equal true, random_keys.each_char.all? { |key| ("0".."9").include?(key) }
+	end
 
 end
