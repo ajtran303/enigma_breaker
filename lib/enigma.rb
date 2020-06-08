@@ -71,7 +71,7 @@ class Enigma
     cracked_message = nil; cracked_key = nil
     loop do
       brute_attempt = brute_keys.shift.to_s.rjust(5, "0")
-      shifts = Gear.get_shifts(brute_attempt, date)
+      shifts = Gear.get_shifts(brute_attempt, date ||= get_date_of_today)
       cracked_message = CipherEngine.get_decryption(tokens, shifts)
       cracked_key = brute_attempt
       break if cracked_message[-4..-1] == " end"
