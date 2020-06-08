@@ -41,17 +41,13 @@ class Enigma
     is_valid_date?(date)
   end
 
-  def reprimand
-    puts "Invalid input! Execution halted."
-  end
-
   def make_random_keys
     rand(0...100_000).to_s.rjust(5, "0")
   end
 
   def encrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    return reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
+    exit unless is_valid_input?(secret_message, initial_key, offset_key)
     initial_key ||= make_random_keys
     offset_key ||= get_date_of_today
 
@@ -65,7 +61,7 @@ class Enigma
 
   def decrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    return reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
+    exit unless is_valid_input?(secret_message, initial_key, offset_key)
     offset_key ||= get_date_of_today
 
     tokens = Tokenizer.get_tokens(secret_message)

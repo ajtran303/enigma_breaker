@@ -10,11 +10,6 @@ class EnigmaTest < MiniTest::Test
 		assert_instance_of Enigma, enigma
 	end
 
-	def test_it_can_reprimand
-		enigma = Enigma.new
-		assert_nil enigma.reprimand
-	end
-
 	def test_it_can_get_date_of_today
 		enigma = Enigma.new
 		date_of_today = Date.today.strftime('%d%m%y')
