@@ -1,7 +1,6 @@
 require "./lib/gear"
 require "./lib/tokenizer"
 require "./lib/encryption_engine"
-require "./lib/decryption_engine"
 require "./lib/sequenceable"
 
 class Enigma
@@ -41,7 +40,7 @@ class Enigma
   def encrypt(secret_message, *settings)
     initial_key, offset_key = settings
     exit unless is_valid_input?(secret_message, initial_key, offset_key)
-    
+
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key ||= make_random_sequence, offset_key ||= get_date_of_today)
 
@@ -57,7 +56,7 @@ class Enigma
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key ||= get_date_of_today)
 
-    { decryption: DecryptionEngine.get_decryption(tokens, shifts),
+    { decryption: EncryptionEngine.get_decryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end

@@ -16,6 +16,13 @@ class EncryptionEngine
     encrypter.encrypt(message)
   end
 
+  def self.get_decryption(tokens, shifts)
+    decrypter = self.new
+    shifts.values_at(:A, :B, :C, :D).each { |shift| decrypter.add_cipher(-shift) }
+    message = decrypter.group_tokens(tokens)
+    decrypter.encrypt(message)
+  end
+
   def group_tokens(tokens)
     grouped_tokens = []
     tokens.each_slice(4) {|token| grouped_tokens << token}
