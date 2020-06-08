@@ -10,9 +10,8 @@ class Rotator
   end
 
   def shift_sequence_by(amount)
-    sequence = @character_sequence
-    amount = amount % sequence.size
-    @character_sequence = sequence.rotate(amount)
+    amount = amount % @character_sequence.size
+    @character_sequence = @character_sequence.rotate(amount)
   end
 
   def self.get_sequence(shift_amount)
