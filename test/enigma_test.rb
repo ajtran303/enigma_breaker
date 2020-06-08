@@ -1,7 +1,6 @@
 require "./test/test_helper"
 require "mocha/minitest"
 require "./lib/enigma"
-require "date"
 
 class EnigmaTest < MiniTest::Test
 
@@ -30,7 +29,6 @@ class EnigmaTest < MiniTest::Test
 		assert_equal expected, enigma.encrypt("hello world", "02715")
 	end
 
-
 	def test_it_can_decrypt_a_message_given_a_key # without date
 		enigma_1 = Enigma.new
 		enigma_1.stubs(:get_date_of_today).returns("040895")
@@ -39,7 +37,6 @@ class EnigmaTest < MiniTest::Test
 		expected = { decryption: "hello world", key: "02715", date: "040895" }
 		assert_equal expected, enigma_1.decrypt(encrypted[:encryption], "02715")
 	end
-
 
 	def test_it_has_a_real_date
 		enigma = Enigma.new
@@ -144,22 +141,22 @@ class EnigmaTest < MiniTest::Test
 	def test_it_can_encrypt_a_message_with_no_additional_input
 		enigma_1 = Enigma.new
 		enigma_1.stubs(:get_date_of_today).returns("040895")
-		enigma_1.stubs(:make_random_keys).returns("02715")
+		enigma_1.stubs(:make_random_sequence).returns("02715")
 
 		expected = {:encryption=>"keder ohulw", :key=>"02715", :date=>"040895"}
 		assert_equal expected, enigma_1.encrypt("hello world")
 
 		enigma_2 = Enigma.new
 		enigma_2.stubs(:get_date_of_today).returns("070620")
-		enigma_2.stubs(:make_random_keys).returns("02715")
+		enigma_2.stubs(:make_random_sequence).returns("02715")
 
 		expected = {:encryption=>"nib udmcxpu", :key=>"02715", :date=>"070620"}
 		assert_equal expected, enigma_2.encrypt("hello world")
 	end
 
-	def test_it_can_make_random_keys
+	def test_it_can_make_random_sequence
 		enigma = Enigma.new
-    random_keys = enigma.make_random_keys
+    random_keys = enigma.make_random_sequence
     assert_instance_of String, random_keys
     assert_equal 5, random_keys.length
     assert_includes 0...100_000, random_keys.to_i

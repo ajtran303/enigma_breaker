@@ -1,9 +1,12 @@
+require "./lib/sequenceable"
+
 class Rotator
+  include Sequenceable
 
   attr_reader :character_sequence
 
   def initialize
-    @character_sequence = ("a".."z").to_a << " "
+    @character_sequence = get_a_to_space_sequence
   end
 
   def shift_sequence_by(amount)
