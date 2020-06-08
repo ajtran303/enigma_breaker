@@ -1,7 +1,9 @@
 require "./test/test_helper"
 require "./lib/tokenizer"
+require "./lib/sequenceable"
 
 class TokenizerTest < MiniTest::Test
+	include Sequenceable
 
 	def setup
 		@tokenizer = Tokenizer.new
@@ -9,7 +11,7 @@ class TokenizerTest < MiniTest::Test
 
 	def test_it_exists_with_attributes
 		assert_instance_of Tokenizer, @tokenizer
-		expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+		expected = get_a_to_space_sequence
 		assert_equal expected, @tokenizer.character_sequence
 	end
 

@@ -1,7 +1,9 @@
 require "./test/test_helper"
 require "./lib/decryption_engine"
+require "./lib/sequenceable"
 
 class DecryptionEngineTest < MiniTest::Test
+  include Sequenceable
 
   def test_it_exists_with_attributes
     decrypter = DecryptionEngine.new
@@ -14,13 +16,13 @@ class DecryptionEngineTest < MiniTest::Test
     decrypter_1 = DecryptionEngine.new
     decrypter_1.add_cipher(0)
 
-    expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    expected_sequence = get_a_to_space_sequence
     assert_includes decrypter_1.ciphers, expected_sequence
 
     decrypter_2 = DecryptionEngine.new
     decrypter_2.add_cipher(1)
 
-    expected_sequence = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    expected_sequence = get_space_to_z_sequence
     assert_includes decrypter_2.ciphers, expected_sequence
   end
 
@@ -33,7 +35,7 @@ class DecryptionEngineTest < MiniTest::Test
 
     assert_equal 4, decrypter.ciphers.count
 
-    expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    expected_sequence = get_a_to_space_sequence
 
     assert_equal true, decrypter.ciphers.all? { |cipher| cipher.count == expected_sequence.count }
     assert_equal 4, decrypter.ciphers.count { |cipher| cipher == expected_sequence }

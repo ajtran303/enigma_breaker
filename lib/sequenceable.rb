@@ -4,6 +4,14 @@ module Sequenceable
     ("a".."z").to_a << " "
   end
 
+  def get_b_to_a_sequence
+    (("b".."z").to_a << " ") << "a"
+  end
+
+  def get_space_to_z_sequence
+    ("a".."z").to_a.prepend " "
+  end
+
   def get_date_of_today
     require 'date'; Date.today.strftime('%d%m%y')
   end

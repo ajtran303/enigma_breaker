@@ -1,8 +1,10 @@
 require "./test/test_helper"
 require "mocha/minitest"
 require "./lib/enigma"
+require "./lib/sequenceable"
 
 class EnigmaTest < MiniTest::Test
+	include Sequenceable
 
 	def test_it_exists_with_attributes
 		enigma = Enigma.new
@@ -11,8 +13,8 @@ class EnigmaTest < MiniTest::Test
 
 	def test_it_can_get_date_of_today
 		enigma = Enigma.new
-		date_of_today = Date.today.strftime('%d%m%y')
-		assert_equal date_of_today, enigma.get_date_of_today
+		expected = get_date_of_today
+		assert_equal expected, enigma.get_date_of_today
 	end
 
 	def test_it_can_encrypt_a_message_given_a_key_and_date
@@ -69,11 +71,13 @@ class EnigmaTest < MiniTest::Test
 		enigma = Enigma.new
 		valid_key_1 = "02715"
 		valid_key_2 = nil
+		valid_key_3 = make_random_sequence
 		invalid_key_1 = "040895"
 		invalid_key_2 = "chars"
 		invalid_key_3 = 27150
 		assert_equal true, enigma.is_valid_key?(valid_key_1)
 		assert_equal true, enigma.is_valid_key?(valid_key_2)
+		assert_equal true, enigma.is_valid_key?(valid_key_3)
 		assert_equal false, enigma.is_valid_key?(invalid_key_1)
 		assert_equal false, enigma.is_valid_key?(invalid_key_2)
 		assert_equal false, enigma.is_valid_key?(invalid_key_3)
@@ -83,11 +87,13 @@ class EnigmaTest < MiniTest::Test
 		enigma = Enigma.new
 		valid_date_1 = "040895"
 		valid_date_2 = nil
+		valid_date_3 = get_date_of_today
 		invalid_date_1 = "0408950"
 		invalid_date_2 = "hello!"
 		invalid_date_3 = 11947
 		assert_equal true, enigma.is_valid_date?(valid_date_1)
 		assert_equal true, enigma.is_valid_date?(valid_date_2)
+		assert_equal true, enigma.is_valid_date?(valid_date_3)
 		assert_equal false, enigma.is_valid_date?(invalid_date_1)
 		assert_equal false, enigma.is_valid_date?(invalid_date_2)
 		assert_equal false, enigma.is_valid_date?(invalid_date_3)

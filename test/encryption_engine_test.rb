@@ -1,7 +1,9 @@
 require "./test/test_helper"
 require "./lib/encryption_engine"
+require "./lib/sequenceable"
 
 class EncryptionEngineTest < MiniTest::Test
+  include Sequenceable
 
   def test_it_exists_with_attributes
     encrypter = EncryptionEngine.new
@@ -63,7 +65,7 @@ class EncryptionEngineTest < MiniTest::Test
     encrypter = EncryptionEngine.new
     encrypter.add_cipher(0)
 
-    expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    expected_sequence = get_a_to_space_sequence
     assert_includes encrypter.ciphers, expected_sequence
   end
 
@@ -76,7 +78,7 @@ class EncryptionEngineTest < MiniTest::Test
 
     assert_equal 4, encrypter.ciphers.count
 
-    expected_sequence = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    expected_sequence = get_a_to_space_sequence
 
     assert_equal true, encrypter.ciphers.all? { |cipher| cipher.count == expected_sequence.count }
     assert_equal 4, encrypter.ciphers.count { |cipher| cipher == expected_sequence }
