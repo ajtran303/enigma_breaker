@@ -39,9 +39,17 @@ module Sequenceable
   def get_last_six(sequence)
     sequence[-6..-1]
   end
-  
+
   def get_last_seven(sequence)
     sequence[-7..-1]
+  end
+
+  def get_last_group(series)
+    last_group = { 0 => get_last_four(series),
+                   1 => get_last_five(series),
+                   2 => get_last_six(series),
+                   3 => get_last_seven(series) }
+    last_group[series.size % 4]
   end
 
 end

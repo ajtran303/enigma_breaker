@@ -40,10 +40,8 @@ class Enigma
   def encrypt(secret_message, *settings)
     initial_key, offset_key = settings
     exit unless is_valid_input?(secret_message, initial_key, offset_key)
-
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key ||= make_random_sequence, offset_key ||= get_date_of_today)
-
     { encryption: CipherEngine.get_encryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
@@ -52,45 +50,34 @@ class Enigma
   def decrypt(secret_message, *settings)
     initial_key, offset_key = settings
     exit unless is_valid_input?(secret_message, initial_key, offset_key)
-
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key ||= get_date_of_today)
-
     { decryption: CipherEngine.get_decryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end
 
-  def crack(secret_message, *date_of_transmission)
-    date_input, = date_of_transmission
-    exit unless is_valid_message?(secret_message) && is_valid_date?(date_input)
-
-    date_input ||= get_date_of_today
-
-    full_tokens = Tokenizer.get_tokens(secret_message)
-    proto_tokens = get_last_four(full_tokens) if full_tokens.count % 4 == 0
-    proto_tokens = get_last_five(full_tokens) if full_tokens.count % 4 == 1
-    proto_tokens = get_last_six(full_tokens) if full_tokens.count % 4 == 2
-    proto_tokens = get_last_seven(full_tokens) if full_tokens.count % 4 == 3
-
-    cracked_message = nil; cracked_key = nil
-
-    brute_keys = get_zero_to_100_000_sequence
-
-    loop do
-      brute_attempt = pad_with_zeroes(brute_keys.shift)
-      brute_shifts = Gear.get_shifts(brute_attempt, date_input)
-      cracked_message = CipherEngine.get_decryption(proto_tokens, brute_shifts)
-      cracked_key = brute_attempt
-      break if get_last_four(cracked_message) == " end"
-    end
-
-    cracked_shifts = Gear.get_shifts(cracked_key, date_input)
-    cracked_message = CipherEngine.get_decryption(full_tokens, cracked_shifts)
-
-    { decryption: cracked_message,
-      date: date_input,
+  def crack(secret_message, offset_key=nil)
+    exit unless is_valid_message?(secret_message) && is_valid_date?(offset_key)
+    tokens = Tokenizer.get_tokens(secret_message)
+    terminal_tokens = get_last_group(tokens)
+    crack_results = brute_attack(terminal_tokens, offset_key ||= get_date_of_today )
+    cracked_key, cracked_shifts = crack_results
+    { decryption: CipherEngine.get_decryption(tokens, cracked_shifts),
+      date: offset_key,
       key: cracked_key }
+  end
+
+  def brute_attack(token_sample, offset_key)
+    brute_keys = get_zero_to_100_000_sequence
+    brute_key = nil; brute_shifts = nil; cracked_keyword = nil
+    loop do
+      brute_key = pad_with_zeroes(brute_keys.shift)
+      brute_shifts = Gear.get_shifts(brute_key, offset_key)
+      cracked_keyword = CipherEngine.get_decryption(token_sample, brute_shifts)
+      break if get_last_four(cracked_keyword) == " end"
+    end
+    [brute_key, brute_shifts]
   end
 
 end
