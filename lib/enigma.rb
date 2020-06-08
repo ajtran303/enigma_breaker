@@ -61,4 +61,25 @@ class Enigma
       date: offset_key }
   end
 
+  def crack(secret_message, *date_of_transmission)
+    date, = date_of_transmission
+    exit unless is_valid_message?(secret_message) && is_valid_date?(date)
+
+    tokens = Tokenizer.get_tokens(secret_message)
+
+    brute_keys = (0...100_000).to_a
+    cracked_message = nil; cracked_key = nil
+    loop do
+      brute_attempt = brute_keys.shift.to_s.rjust(5, "0")
+      shifts = Gear.get_shifts(brute_attempt, date)
+      cracked_message = CipherEngine.get_decryption(tokens, shifts)
+      cracked_key = brute_attempt
+      break if cracked_message[-4..-1] == " end"
+    end
+
+    { decryption: cracked_message,
+      date: date,
+      key: cracked_key }
+  end
+
 end
