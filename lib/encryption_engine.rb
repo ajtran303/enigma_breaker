@@ -1,6 +1,7 @@
 require './lib/rotator'
 
 class EncryptionEngine
+
   attr_reader :ciphers, :terminal_tokens
 
   def initialize
@@ -37,11 +38,7 @@ class EncryptionEngine
   end
 
   def translate(token, cipher)
-    if token.is_a? Integer
-      cipher[token]
-    else
-      token
-    end
+    token.is_a?(Integer) ? cipher[token] : token
   end
 
 end
