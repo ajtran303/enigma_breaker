@@ -10,7 +10,7 @@ class EncryptionEngine
   end
 
   def self.get_encryption(tokens, shifts)
-    encrypter = EncryptionEngine.new
+    encrypter = self.new
     shifts.values_at(:A, :B, :C, :D).each { |shift| encrypter.add_cipher(shift) }
     message = encrypter.group_tokens(tokens)
     encrypter.encrypt(message)

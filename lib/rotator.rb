@@ -16,7 +16,7 @@ class Rotator
   end
 
   def self.get_sequence(shift_amount)
-    rotator = Rotator.new
+    rotator = self.new
     rotator.shift_sequence_by(shift_amount)
     rotator.character_sequence
   end

@@ -19,7 +19,7 @@ class Tokenizer
   end
 
   def self.get_tokens(message)
-    tokenizer = Tokenizer.new
+    tokenizer = self.new
     tokenizer.generate_tokens(message)
   end
 

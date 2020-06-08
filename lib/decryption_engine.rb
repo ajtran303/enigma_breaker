@@ -10,7 +10,7 @@ class DecryptionEngine
   end
 
   def self.get_decryption(tokens, shifts)
-    decrypter = DecryptionEngine.new
+    decrypter = self.new
     shifts.values_at(:A, :B, :C, :D).each { |shift| decrypter.add_cipher(shift) }
     message = decrypter.group_tokens(tokens)
     decrypter.decrypt(message)
