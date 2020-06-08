@@ -9,36 +9,35 @@ class CipherEngine
     @terminal_tokens = nil
   end
 
-  def self.get_encryption(tokens, shifts)
+  def self.get_encryption(tokenized_input, shifts)
     encrypter = self.new
-    shifts.values_at(:A, :B, :C, :D).each { |shift| encrypter.add_cipher(shift) }
-    message = encrypter.group_tokens(tokens)
-    encrypter.substitute(message)
+    shifts.values.each { |shift| encrypter.add_cipher(shift) }
+    cipher_input = encrypter.parse(tokenized_input)
+    encrypter.compile(cipher_input)
   end
 
-  def self.get_decryption(tokens, shifts)
+  def self.get_decryption(tokenized_input, shifts)
     decrypter = self.new
-    shifts.values_at(:A, :B, :C, :D).each { |shift| decrypter.add_cipher(-shift) }
-    message = decrypter.group_tokens(tokens)
-    decrypter.substitute(message)
+    shifts.values.each { |shift| decrypter.add_cipher(-shift) }
+    cipher_input = decrypter.parse(tokenized_input)
+    decrypter.compile(cipher_input)
   end
 
-  def group_tokens(tokens)
-    grouped_tokens = []
-    tokens.each_slice(4) { |token| grouped_tokens << token }
-    @terminal_tokens = grouped_tokens.pop if grouped_tokens.last.size < 4
-    grouped_tokens
+  def parse(tokens)
+    parsed_tokens = tokens.each_slice(4).map { |group_of_tokens| group_of_tokens }
+    @terminal_tokens = parsed_tokens.pop if parsed_tokens.last.size < 4
+    parsed_tokens
   end
 
   def add_cipher(rotations)
     @ciphers << Rotator.get_sequence(rotations)
   end
 
-  def substitute(sequence_of_tokens)
-    substitution_end = translate_all(@terminal_tokens) unless @terminal_tokens == nil
-    substitution = sequence_of_tokens.flat_map { |tokens| translate_all(tokens) }
-    substitution << substitution_end
-    substitution.join
+  def compile(token_groups)
+    cipher_text_end = translate_all(@terminal_tokens) unless @terminal_tokens == nil
+    cipher_text = token_groups.flat_map { |token_group| translate_all(token_group) }
+    cipher_text << cipher_text_end
+    cipher_text.join
   end
 
   def translate_all(tokens)
