@@ -207,4 +207,10 @@ class EnigmaTest < MiniTest::Test
 		assert_equal expected, enigma.crack("bfntiaiwnibdisnlufpl")
 	end
 
+	def test_it_can_brute_attack
+		enigma = Enigma.new
+		expected = ["17835", {:A=>21, :B=>82, :C=>83, :D=>35}]
+		assert_equal expected, enigma.brute_attack([20, 5, 15, 11], "080620")
+	end
+
 end
