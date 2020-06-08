@@ -1,6 +1,6 @@
 require './lib/rotator'
 
-class Decrypter
+class DecryptionEngine
 
   attr_reader :ciphers, :terminal_tokens
 
@@ -10,7 +10,7 @@ class Decrypter
   end
 
   def self.get_decryption(tokens, shifts)
-    decrypter = Decrypter.new
+    decrypter = DecryptionEngine.new
     shifts.values_at(:A, :B, :C, :D).each { |shift| decrypter.add_cipher(shift) }
     message = decrypter.group_tokens(tokens)
     decrypter.decrypt(message)

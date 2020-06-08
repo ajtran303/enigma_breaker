@@ -1,8 +1,8 @@
 require "date"
 require "./lib/gear"
 require "./lib/tokenizer"
-require "./lib/encrypter"
-require "./lib/decrypter"
+require "./lib/encryption_engine"
+require "./lib/decryption_engine"
 
 class Enigma
 
@@ -42,7 +42,7 @@ class Enigma
   end
 
   def reprimand
-    puts "Invalid input! Execution halted."; exit
+    puts "Invalid input! Execution halted."
   end
 
   def make_random_keys
@@ -51,27 +51,27 @@ class Enigma
 
   def encrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
+    return reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
     initial_key ||= make_random_keys
     offset_key ||= get_date_of_today
 
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key)
 
-    { encryption: Encrypter.get_encryption(tokens, shifts),
+    { encryption: EncryptionEngine.get_encryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end
 
   def decrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
+    return reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
     offset_key ||= get_date_of_today
 
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key)
 
-    { decryption: Decrypter.get_decryption(tokens, shifts),
+    { decryption: DecryptionEngine.get_decryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end

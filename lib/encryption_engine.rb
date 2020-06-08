@@ -1,6 +1,6 @@
 require './lib/rotator'
 
-class Encrypter
+class EncryptionEngine
   attr_reader :ciphers, :terminal_tokens
 
   def initialize
@@ -9,7 +9,7 @@ class Encrypter
   end
 
   def self.get_encryption(tokens, shifts)
-    encrypter = Encrypter.new
+    encrypter = EncryptionEngine.new
     shifts.values_at(:A, :B, :C, :D).each { |shift| encrypter.add_cipher(shift) }
     message = encrypter.group_tokens(tokens)
     encrypter.encrypt(message)
