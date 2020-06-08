@@ -4,11 +4,11 @@ require "./lib/enigma.rb"
 
 encrypted_input, cracked_ouput, date_input = ARGV
 
-encrypted_message = File.open(encrypted_input, "r").readlines(chomp: true).join
+encrypted_message = File.open(encrypted_input, "r").readlines.join
 
 enigma = Enigma.new
 
-message_output, key_output, date_output = enigma.crack(encrypted_message, date_input).values
+message_output, date_output, key_output = enigma.crack(encrypted_message, date_input).values
 
 decrypted_message = File.open(cracked_ouput, "w")
 decrypted_message.write message_output
