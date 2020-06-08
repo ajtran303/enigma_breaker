@@ -13,11 +13,35 @@ module Sequenceable
   end
 
   def make_random_sequence
-    rand(0...100_000).to_s.rjust(5, "0")
+    pad_with_zeroes(rand(0...100_000))
   end
 
   def make_offset_sequence(date)
-    (date.to_i**2).to_s[-4..-1]
+    get_last_four((date.to_i**2).to_s)
+  end
+
+  def get_zero_to_100_000_sequence
+    (0...100_000).to_a
+  end
+
+  def get_last_four(sequence)
+    sequence[-4..-1]
+  end
+
+  def pad_with_zeroes(sequence)
+    sequence.to_s.rjust(5, "0")
+  end
+
+  def get_last_five(sequence)
+    sequence[-5..-1]
+  end
+
+  def get_last_six(sequence)
+    sequence[-6..-1]
+  end
+  
+  def get_last_seven(sequence)
+    sequence[-7..-1]
   end
 
 end
