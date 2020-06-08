@@ -1,6 +1,6 @@
 require "./lib/gear"
 require "./lib/tokenizer"
-require "./lib/encryption_engine"
+require "./lib/cipher_engine"
 require "./lib/sequenceable"
 
 class Enigma
@@ -44,7 +44,7 @@ class Enigma
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key ||= make_random_sequence, offset_key ||= get_date_of_today)
 
-    { encryption: EncryptionEngine.get_encryption(tokens, shifts),
+    { encryption: CipherEngine.get_encryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end
@@ -56,7 +56,7 @@ class Enigma
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key ||= get_date_of_today)
 
-    { decryption: EncryptionEngine.get_decryption(tokens, shifts),
+    { decryption: CipherEngine.get_decryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end
