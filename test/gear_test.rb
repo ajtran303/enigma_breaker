@@ -23,12 +23,6 @@ class GearTest < MiniTest::Test
     assert_equal expected_offsets, @gear.make_offsets
   end
 
-  def test_it_can_square_date
-    expected_square = 1672401025
-    assert_equal expected_square, @gear.square_date
-    assert_equal expected_square, @gear.date.to_i**2
-  end
-
   def test_it_can_make_shifts
     expected_shifts = { A:3, B:27, C:73, D:20 }
     assert_equal expected_shifts, @gear.make_shifts

@@ -16,4 +16,8 @@ module Sequenceable
     rand(0...100_000).to_s.rjust(5, "0")
   end
 
+  def make_offset_sequence(date)
+    (date.to_i**2).to_s[-4..-1]
+  end
+
 end

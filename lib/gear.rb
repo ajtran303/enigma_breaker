@@ -1,4 +1,8 @@
+require "./lib/sequenceable"
+
 class Gear
+  include Sequenceable
+
   attr_reader :keys, :date
 
   def initialize(keys, date)
@@ -19,15 +23,11 @@ class Gear
   end
 
   def make_offsets
-    offsets = square_date.to_s[-4..-1].split("")
+    offsets = make_offset_sequence(@date).split("")
     { A: offsets[0].to_i,
       B: offsets[1].to_i,
       C: offsets[2].to_i,
       D: offsets[3].to_i }
-  end
-
-  def square_date
-    @date.to_i**2
   end
 
   def make_shifts
