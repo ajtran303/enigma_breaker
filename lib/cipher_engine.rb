@@ -1,4 +1,4 @@
-require './lib/rotator'
+require "./lib/rotator"
 
 class CipherEngine
 
