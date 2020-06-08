@@ -1,14 +1,11 @@
-require "date"
 require "./lib/gear"
 require "./lib/tokenizer"
-require "./lib/encrypter"
-require "./lib/decrypter"
+require "./lib/encryption_engine"
+require "./lib/decryption_engine"
+require "./lib/sequenceable"
 
 class Enigma
-
-  def get_date_of_today
-    Date.today.strftime('%d%m%y')
-  end
+  include Sequenceable
 
   def is_valid_message?(message_input)
     message_input.is_a? String
@@ -41,37 +38,26 @@ class Enigma
     is_valid_date?(date)
   end
 
-  def reprimand
-    puts "Invalid input! Execution halted."; exit
-  end
-
-  def make_random_keys
-    rand(0...100_000).to_s.rjust(5, "0")
-  end
-
   def encrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
-    initial_key ||= make_random_keys
-    offset_key ||= get_date_of_today
-
+    exit unless is_valid_input?(secret_message, initial_key, offset_key)
+    
     tokens = Tokenizer.get_tokens(secret_message)
-    shifts = Gear.get_shifts(initial_key, offset_key)
+    shifts = Gear.get_shifts(initial_key ||= make_random_sequence, offset_key ||= get_date_of_today)
 
-    { encryption: Encrypter.get_encryption(tokens, shifts),
+    { encryption: EncryptionEngine.get_encryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end
 
   def decrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    reprimand unless is_valid_input?(secret_message, initial_key, offset_key)
-    offset_key ||= get_date_of_today
+    exit unless is_valid_input?(secret_message, initial_key, offset_key)
 
     tokens = Tokenizer.get_tokens(secret_message)
-    shifts = Gear.get_shifts(initial_key, offset_key)
+    shifts = Gear.get_shifts(initial_key, offset_key ||= get_date_of_today)
 
-    { decryption: Decrypter.get_decryption(tokens, shifts),
+    { decryption: DecryptionEngine.get_decryption(tokens, shifts),
       key: initial_key,
       date: offset_key }
   end
