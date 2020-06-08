@@ -1,5 +1,3 @@
-# $ ruby ./lib/decrypt.rb encrypted.txt decrypted.txt 82000 070620
-
 require "./lib/enigma.rb"
 
 encrypted_input, decrypted_output, key_input, date_input = ARGV
