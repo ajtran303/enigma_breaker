@@ -11,6 +11,31 @@ class EnigmaTest < MiniTest::Test
 		assert_instance_of Enigma, enigma
 	end
 
+	def test_it_knows_all_the_keys
+		enigma = Enigma.new
+		assert_equal (0...100_000).to_a, enigma.get_zero_to_100_000_sequence
+	end
+
+	def test_it_can_get_the_last_four
+		enigma = Enigma.new
+		assert_equal [1,2,3,4], enigma.get_last_four([5,4,3,2,1,2,3,4])
+	end
+
+	def test_it_can_get_the_last_five
+		enigma = Enigma.new
+		assert_equal [2,1,2,3,4], enigma.get_last_five([5,4,3,2,1,2,3,4])
+	end
+
+	def test_it_can_get_the_last_six
+		enigma = Enigma.new
+		assert_equal [3,2,1,2,3,4], enigma.get_last_six([5,4,3,2,1,2,3,4])
+	end
+
+	def test_it_can_get_the_last_seven
+		enigma = Enigma.new
+		assert_equal [4,3,2,1,2,3,4], enigma.get_last_seven([5,4,3,2,1,2,3,4])
+	end
+
 	def test_it_can_get_date_of_today
 		enigma = Enigma.new
 		expected = get_date_of_today
