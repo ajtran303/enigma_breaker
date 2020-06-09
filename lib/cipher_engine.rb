@@ -4,23 +4,23 @@ class CipherEngine
 
   attr_reader :ciphers, :terminal_tokens
 
-  def initialize
-    @ciphers = []
-    @terminal_tokens = nil
-  end
-
   def self.get_encryption(tokenized_input, shifts)
-    encrypter = self.new
+    encrypter = new
     shifts.values.each { |shift| encrypter.add_cipher(shift) }
     cipher_input = encrypter.parse(tokenized_input)
     encrypter.compile(cipher_input)
   end
 
   def self.get_decryption(tokenized_input, shifts)
-    decrypter = self.new
+    decrypter = new
     shifts.values.each { |shift| decrypter.add_cipher(-shift) }
     cipher_input = decrypter.parse(tokenized_input)
     decrypter.compile(cipher_input)
+  end
+
+  def initialize
+    @ciphers = []
+    @terminal_tokens = nil
   end
 
   def parse(tokens)
