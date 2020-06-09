@@ -1,7 +1,10 @@
 require "./lib/sequenceable"
-require "./lib/sequencer"
 
-class Tokenizer < Sequencer
+class Tokenizer
+
+  include Sequenceable
+
+  attr_reader :character_sequence
 
   def self.get_tokens(message)
     tokenizer = new
@@ -9,7 +12,7 @@ class Tokenizer < Sequencer
   end
 
   def initialize
-    super
+    @character_sequence = get_a_to_space_sequence
   end
 
   def generate_tokens(message)
