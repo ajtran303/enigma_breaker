@@ -4,6 +4,7 @@ require "./lib/cipher_engine"
 require "./lib/sequenceable"
 
 class Enigma
+  
   include Sequenceable
 
   def valid_message?(message_input)

@@ -1,7 +1,10 @@
 require "./lib/sequenceable"
-require "./lib/sequencer"
 
-class Rotator < Sequencer
+class Rotator
+
+  include Sequenceable
+
+  attr_reader :character_sequence
 
   def self.get_rotations(amount)
     rotator = new
@@ -10,7 +13,7 @@ class Rotator < Sequencer
   end
 
   def initialize
-    super
+    @character_sequence = get_a_to_space_sequence
   end
 
   def rotate_sequence_by(amount)
