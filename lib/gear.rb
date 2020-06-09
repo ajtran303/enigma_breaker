@@ -1,39 +1,43 @@
 require "./lib/sequenceable"
 
 class Gear
+
   include Sequenceable
 
   attr_reader :keys, :date
+
+  def self.get_shifts(key, date)
+    new_gear = new(key, date)
+    new_gear.make_shifts
+  end
 
   def initialize(keys, date)
     @keys = keys
     @date = date
   end
 
-  def self.get_shifts(key, date)
-    new_gear = self.new(key, date)
-    new_gear.make_shifts
-  end
-
   def make_keys
-    { A: @keys[0..1].to_i,
-      B: @keys[1..2].to_i,
-      C: @keys[2..3].to_i,
-      D: @keys[3..4].to_i }
+    initial_keys =
+      { A: @keys[0..1],
+        B: @keys[1..2],
+        C: @keys[2..3],
+        D: @keys[3..4] }
+    initial_keys.transform_values(&:to_i)
   end
 
   def make_offsets
     offsets = make_offset_sequence(@date).split("")
-    { A: offsets[0].to_i,
-      B: offsets[1].to_i,
-      C: offsets[2].to_i,
-      D: offsets[3].to_i }
+    offsets =
+      { A: offsets[0],
+        B: offsets[1],
+        C: offsets[2],
+        D: offsets[3] }
+    offsets.transform_values(&:to_i)
   end
 
   def make_shifts
-    make_keys.reduce({}) do |shifts, (key, value)|
-      shifts[key] = value + make_offsets[key]
-      shifts
+    make_keys.merge(make_offsets) do | letter, initial, offset|
+     initial + offset
     end
   end
 
