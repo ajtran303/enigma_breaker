@@ -10,15 +10,15 @@ Clone down this repo and `cd` into the directory.
 
 ### Command Line Interface
 
-The CLI will require an existing text file to encrypt. I recommend ending the transmission with the keyword ` end` if you would like to try to cracking feature.
+The CLI will require an existing text file to encrypt. I recommend ending the transmission with the keyword ` end` if you would like to try the cracking feature.
+
+**Important!** All of the following command prompts will generate a new text file.
 
 ```
 $ cat > message.txt
 Hello world! end
   -- control-d --
 ```
-
-**Important!** All of the following command prompts will generate a new text file.
 
 First, encrypt the message. Take note of the key and date of transmission!
 
