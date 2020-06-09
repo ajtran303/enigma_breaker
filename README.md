@@ -94,7 +94,7 @@ In plain English: imagine using four secret-decoder rings to make a secret messa
 
 - `Enigma` takes user input to `encrypt` `decrypt` or `crack` a secret message.
 
-- `Tokenizer` receives the message from `Enigma` and passes it on as `tokens` to the CipherEngine.
+- `Tokenizer` receives the message from `Enigma` and passes it on as `tokens` to the `CipherEngine`.
 
 - `Gear` receives values from `Enigma` and uses them to calculate `shifts` for the `CipherEngine`.
 
