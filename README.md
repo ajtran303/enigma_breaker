@@ -57,13 +57,13 @@ pry(main)> enigma = Enigma.new
 pry(main)> enigma.encrypt("hello world", "02715", "040895")
 
 # decrypt a message with a key and date
-pry(main) > enigma.decrypt("keder ohulw", "02715", "040895")
+pry(main)> enigma.decrypt("keder ohulw", "02715", "040895")
 
 # encrypt a message with a key (uses today's date)
 pry(main)> encrypted = enigma.encrypt("hello world", "02715")
 
 # decrypt a message with a key (uses today's date)
-pry(main) > enigma.decrypt(encrypted[:encryption], "02715")
+pry(main)> enigma.decrypt(encrypted[:encryption], "02715")
 
 # encrypt a message (generates random key and uses today's date)
 pry(main)> enigma.encrypt("hello world")
@@ -84,33 +84,31 @@ The following assessment is based on the [rubric](https://backend.turing.io/modu
 
 **4 - Functionality**
 
-The cracking method and command line interface are successfully implemented. It includes a robust data validation scheme for the user interface.
+The cracking method and command line interface are successfully implemented. It includes a robust data validation scheme for the REPL interface.
 
 **4 - Object Oriented Programming**
 
-I can shortly detail the Single Responsibilities of all of my classes:
+The program design was inspired by biology -- specifically the enzymes that make RNA from DNA.
 
-Enigma takes user input to `encrypt` `decrypt` or `crack` a `secret_message`.
+In plain English: imagine using four secret-decoder rings to make a secret message!
 
-Tokenizer takes a message from Enigma and passes it on as `tokens` to the CipherEngine.
+- `Enigma` takes user input to `encrypt` `decrypt` or `crack` a secret message.
 
-Gear takes values to find `shifts` to give to the CipherEngine.
+- `Tokenizer` receives the message from `Enigma` and passes it on as `tokens` to the CipherEngine.
 
-CipherEngine receives tokens and shifts to `get_encryption` or `get_decryption`.
+- `Gear` receives values from `Enigma` and uses them to calculate `shifts` for the `CipherEngine`.
 
-Rotator is like a secret-decoder ring. It can `get_rotations` of the alphabet.
+- `CipherEngine` uses the shifts to ask the `Rotator` for the correct ciphers to use to translate the tokens correctly. Then it can `get_encryption` or `get_decryption`.
 
-Imagine that CipherEngine uses rotations from four secret-decoder rings to `compile` a secret message!
+- `Rotator` is the "secret-decoder ring". It can `get_rotations` of the alphabet.
 
-That is what happens to the secret message returned to Enigma to output to the user!
-
-Sequenceable is a Module for making, accessing, and calculating sequences. It makes the code more readable -- since almost every class has to do something with a sequence, it can get the method from the Sequenceable.
+- `Sequenceable` is a Module for making, accessing, and calculating sequences. It makes the code more readable -- since almost every class has to do something with a sequence, it can get the method from the same toolbox.
 
 I tried two times to implement Inheritance but then ultimately chose not to for several reasons.
 
 Originally, the CipherEngine was two separate classes - the only difference was the direction of their rotations. I was going to compose a super class for them. Then I thought, "Why have two Engines that rotate separate ways, when I can have one Engine that rotates both ways?" This made my program more simple because then I had one solid class instead of three wishy classes.
 
-I thought that `Tokenizer` and `Rotator` could have a `Sequencer` super class because they both initialize with the same state. I successfully implemented the Inheritance, but then found out that I may have been violating the Liskov Substitution Principle. The Sequencer super class didn't really do anything so I removed it.
+I thought that Tokenizer and Rotator could have a Sequencer super class because they both initialize with the same state. I successfully implemented the Inheritance, but then found out that I may have been violating the Liskov Substitution Principle. The Sequencer super class didn't really do anything so I removed it.
 
 **4 - Ruby Conventions and Mechanics**
 
@@ -122,4 +120,4 @@ Test coverage metrics show 100% coverage! I used some stubs to force specific re
 
 **3 - Version Control**
 
-I need to continue developing my version control workflow and commit when single features have complete functionality.
+I need to continue developing my version control workflow and commit when single features have complete functionality. I have

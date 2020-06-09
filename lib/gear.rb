@@ -32,6 +32,7 @@ class Gear
   end
 
   def make_shifts
+    # raise("Invalid input!") if @keys.nil? || @date.nil?
     make_keys.merge(make_offsets) do | letter, initial_key, offset|
      initial_key + offset
     end
