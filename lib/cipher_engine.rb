@@ -29,8 +29,8 @@ class CipherEngine
     parsed_tokens
   end
 
-  def add_cipher(rotations)
-    @ciphers << Rotator.get_sequence(rotations)
+  def add_cipher(shift)
+    @ciphers << Rotator.get_rotations(shift)
   end
 
   def compile(token_groups)
