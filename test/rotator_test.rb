@@ -12,31 +12,31 @@ class RotatorTest < MiniTest::Test
     assert_equal expected, rotator.character_sequence
   end
 
-  def test_it_can_shift_sequence_by_a_number
+  def test_it_can_rotate_sequence_by_a_number
     rotator_1 = Rotator.new
-    rotator_1.shift_sequence_by(1)
+    rotator_1.rotate_sequence_by(1)
     expected = get_b_to_a_sequence
     assert_equal expected, rotator_1.character_sequence
 
     rotator_2 = Rotator.new
-    rotator_2.shift_sequence_by(0)
+    rotator_2.rotate_sequence_by(0)
     expected = get_a_to_space_sequence
     assert_equal expected, rotator_2.character_sequence
 
     rotator_3 = Rotator.new
-    rotator_3.shift_sequence_by(27)
+    rotator_3.rotate_sequence_by(27)
     expected = get_a_to_space_sequence
     assert_equal expected, rotator_3.character_sequence
 
     rotator_4 = Rotator.new
-    rotator_4.shift_sequence_by(28)
+    rotator_4.rotate_sequence_by(28)
     expected = get_b_to_a_sequence
     assert_equal expected, rotator_4.character_sequence
   end
 
-  def test_its_class_can_return_a_shifted_sequence
+  def test_its_class_can_get_rotations
     expected = get_b_to_a_sequence
-    assert_equal expected, Rotator.get_sequence(1)
+    assert_equal expected, Rotator.get_rotations(1)
   end
 
 end

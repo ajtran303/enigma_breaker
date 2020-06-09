@@ -3,8 +3,6 @@ require "./lib/sequencer"
 
 class Tokenizer < Sequencer
 
-  include Sequenceable
-
   def self.get_tokens(message)
     tokenizer = new
     tokenizer.generate_tokens(message)
