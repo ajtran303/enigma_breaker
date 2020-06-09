@@ -4,21 +4,21 @@ class Rotator
 
   include Sequenceable
 
-  attr_reader :character_sequence
+  attr_reader :characters
 
   def self.get_rotations(amount)
     rotator = new
-    rotator.rotate_sequence_by(amount)
-    rotator.character_sequence
+    rotator.rotate(amount)
+    rotator.characters
   end
 
   def initialize
-    @character_sequence = get_a_to_space_sequence
+    @characters = get_a_to_space_sequence
   end
 
-  def rotate_sequence_by(amount)
-    amount %= @character_sequence.size
-    @character_sequence = @character_sequence.rotate(amount)
+  def rotate(amount)
+    amount %= @characters.size
+    @characters = @characters.rotate(amount)
   end
 
 end

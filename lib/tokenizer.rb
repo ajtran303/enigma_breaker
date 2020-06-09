@@ -4,7 +4,7 @@ class Tokenizer
 
   include Sequenceable
 
-  attr_reader :character_sequence
+  attr_reader :characters
 
   def self.get_tokens(message)
     tokenizer = new
@@ -12,13 +12,13 @@ class Tokenizer
   end
 
   def initialize
-    @character_sequence = get_a_to_space_sequence
+    @characters = get_a_to_space_sequence
   end
 
   def generate_tokens(message)
     tokens = message.downcase.split("")
     tokens.map do |token|
-      @character_sequence.include?(token) ? @character_sequence.index(token) : token
+      @characters.include?(token) ? @characters.index(token) : token
     end
   end
 

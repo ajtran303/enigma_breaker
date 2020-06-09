@@ -34,9 +34,8 @@ class CipherEngine
   end
 
   def compile(token_groups)
-    cipher_text_end = translate_all(@terminal_tokens) unless @terminal_tokens == nil
     cipher_text = token_groups.flat_map { |token_group| translate_all(token_group) }
-    cipher_text << cipher_text_end
+    cipher_text << translate_all(@terminal_tokens) unless @terminal_tokens.nil?
     cipher_text.join
   end
 
