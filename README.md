@@ -90,17 +90,19 @@ The cracking method and command line interface are successfully implemented. It 
 
 I can shortly detail the Single Responsibilities of all of my classes:
 
-Enigma outputs a `secret_message` for the user depending on input passed to `encrypt` `decrypt` and `crack`.
+Enigma takes user input to `encrypt` `decrypt` or `crack` a `secret_message`.
 
-Tokenizer takes a message from Enigma. Then it gives `tokens` to the CipherEngine.
+Tokenizer takes a message from Enigma and passes it on as `tokens` to the CipherEngine.
 
-Gear finds `shifts` to give to the CipherEngine. It calculates the value from an `initial_key` and and `offset_key`
+Gear takes values to find `shifts` to give to the CipherEngine.
 
 CipherEngine receives tokens and shifts to `get_encryption` or `get_decryption`.
 
 Rotator is like a secret-decoder ring. It can `get_rotations` of the alphabet.
 
-Imagine that CipherEngine uses four secret-decoder rings to `compile` a secret message! Because that's basically what is happening!
+Imagine that CipherEngine uses rotations from four secret-decoder rings to `compile` a secret message!
+
+That is what happens to the secret message returned to Enigma to output to the user!
 
 Sequenceable is a Module for making, accessing, and calculating sequences. It makes the code more readable -- since almost every class has to do something with a sequence, it can get the method from the Sequenceable.
 
