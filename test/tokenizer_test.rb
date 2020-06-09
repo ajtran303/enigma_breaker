@@ -12,7 +12,7 @@ class TokenizerTest < MiniTest::Test
 	def test_it_exists_with_attributes
 		assert_instance_of Tokenizer, @tokenizer
 		expected = get_a_to_space_sequence
-		assert_equal expected, @tokenizer.character_sequence
+		assert_equal expected, @tokenizer.characters
 	end
 
   def test_its_class_can_get_tokens

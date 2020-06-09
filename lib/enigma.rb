@@ -4,7 +4,7 @@ require "./lib/cipher_engine"
 require "./lib/sequenceable"
 
 class Enigma
-  
+
   include Sequenceable
 
   def valid_message?(message_input)
@@ -40,7 +40,7 @@ class Enigma
 
   def encrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    exit unless valid_input?(secret_message, initial_key, offset_key)
+    return "Invalid input!" unless valid_input?(secret_message, initial_key, offset_key)
 
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key ||= make_random_sequence, offset_key ||= get_date_of_today)
@@ -52,7 +52,7 @@ class Enigma
 
   def decrypt(secret_message, *settings)
     initial_key, offset_key = settings
-    exit unless valid_input?(secret_message, initial_key, offset_key)
+    return "Invalid input!" unless valid_input?(secret_message, initial_key, offset_key)
 
     tokens = Tokenizer.get_tokens(secret_message)
     shifts = Gear.get_shifts(initial_key, offset_key ||= get_date_of_today)
@@ -63,7 +63,7 @@ class Enigma
   end
 
   def crack(secret_message, offset_key = nil)
-    exit unless valid_message?(secret_message) && valid_date?(offset_key)
+    return "Invalid input!" unless valid_message?(secret_message) && valid_date?(offset_key)
 
     tokens = Tokenizer.get_tokens(secret_message)
     terminal_tokens = get_last_group(tokens)
