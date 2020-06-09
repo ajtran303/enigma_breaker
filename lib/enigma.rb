@@ -85,10 +85,10 @@ class Enigma
       brute_key = pad_with_zeroes(brute_keys.shift)
       brute_shifts = Gear.get_shifts(brute_key, offset_key)
       cracked_keyword = CipherEngine.get_decryption(token_sample, brute_shifts)
-      break if get_last_four(cracked_keyword) == " end"
+      break if get_last_four(cracked_keyword) == " end" || brute_keys.empty?
     end
 
-    [brute_key, brute_shifts]
+    get_last_four(cracked_keyword) == " end" ? [brute_key, brute_shifts] : raise("Failed to crack.")
   end
 
 end
