@@ -120,4 +120,4 @@ Test coverage metrics show 100% coverage! I used some stubs to force specific re
 
 **3 - Version Control**
 
-I need to continue developing my version control workflow and commit when single features have complete functionality. I have
+I need to continue developing my version control workflow and commit when single features have complete functionality.
